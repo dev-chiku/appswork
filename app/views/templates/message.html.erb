@@ -1,0 +1,199 @@
+	<div class="main container">
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<div style="float: left; font-size: 15px;">
+							メッセージ一覧
+						</div>
+						<div style="float: right;">
+							<!-- <a class="btn btn-default btn-sm"> <i class="glyphicon glyphicon-search"></i></a> -->
+							<a class="btn btn-default btn-sm" style="margin-left: 10px;" ng-click="openAddMessageDialog()"> <i class="glyphicon glyphicon-plus"></i></a>
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+
+					<div class="panel-body">
+						<div ng-show="!messages || messages.length == 0">
+							メッセージはありません
+						</div>
+						<div class="row">
+							<div class="col-lg-12" ng-repeat="titleMsg in messages">
+								<div class="panel panel-default" style="margin-bottom: 10px;">
+									<div class="panel-heading">
+										<a data-toggle="collapse" data-parent="#accordion" href="javascript:;" ng-click="selectTitle(titleMsg)" data-target="#message{{$index}}" style="color: #212121;" id="target{{titleMsg.id}}"> 
+											<h4 class="panel-title" style="font-size: 13px; float: left;"><img src="/assets/person.jpg" style="max-height: 60px; max-width: 60px;" /></h4>
+										<div style="float: left; font-size: 14px !important; margin-left: 10px; color: #2196f3;">
+											<span>{{titleMsg.user_name}}</span>
+											<br />
+											<span></span>
+										</div>
+										<div style="float: left; font-size: 14px !important; margin-left: 10px; color: #2196f3;">
+											<span>{{titleMsg.title}}</span>
+										</div>
+										<div class="top-badge red" ng-bind="titleMsg.notification_msg_count" ng-show="titleMsg.notification_msg_count > 0" style="position: static; float: left; margin-top: 2px; margin-left: 10px;">
+											
+										</div>
+										<div style="float: right; font-size: 10px;">
+											{{titleMsg.created_at_str}}
+										</div> <div style="clear: both;"></div> </a>
+									</div>
+									<div id="message{{$index}}" class="panel-collapse collapse">
+										<div class="panel-body" style="font-size: 12px; padding: 20px 25px;">
+											
+											<div ng-repeat="message in messages[$index].details">
+
+												<hr />
+	
+												<div class="row" style="margin-top: 10px;">
+													<div class="col-lg-12">
+														<div>
+															<div style="float: left;">
+																<img src="/assets/person.jpg" style="max-height: 30px; max-width: 30px;" />
+															</div>
+															<div style="float: left; margin-left: 10px;">
+																<a ng-href="employer/{{message.user_id}}">{{message.user_name}}</a>
+															</div>
+															<div style="float: right; font-size: 10px;">
+																{{message.created_at_str}}
+															</div>
+															<div style="clear: both;"></div>
+														</div>
+														<div style="margin-top: 10px;">
+															<pre class="back-none" style="font-size: 13px;" ng-bind="message.content"></pre>
+														</div>
+													</div>
+												</div>
+											
+											</div>										
+										</div>
+
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 0; display: none; margin-left: 17px; margin-top: 20px;" ng-style="{display: message.displayMessages == '' || message.displayMessages == undefined  ? 'none' : ''}">
+											<div class="alert" ng-class="{'alert-info alert-info-ex-blue': !isError(message.errors), 'alert-danger': isError(message.errors)}" role="alert">
+												<button type="button" class="close" data-dismiss="alert" style="font-size: 0;">
+													<span aria-hidden="true" style="font-size: 17px;">×</span><span class="sr-only">Close</span>
+												</button>
+												<p class="text-center" ng-bind-html="message.displayMessages | lineBreak">
+												</p>
+											</div>
+										</div>	
+
+										<div class="panel-footer" style="border-top: 1px solid #eeeeee;">
+											<div class="row">
+												<div class="col-lg-12">
+													<textarea class="form-control" rows="5" style="background-color: white;" ng-model="message.content" ></textarea>
+													<div style="float: right; margin-top: 5px;">
+														<button type="button" class="btn btn-primary btn-xs" ng-click="insertMessage(messages[$index], message)">
+															送 信
+														</button>
+													</div>
+													<div style="clear: both;"></div>
+												</div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- メッセージ追加モーダル -->
+	<form novalidate name="formMessage" ng-submit="insertMessageThread(messageThread)" autocomplete="on">
+		<div class="modal" id="modal-message" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content" style="max-width: 500px;">
+					<div class="modal-header" style=" border-bottom: 1px solid #e5e5e5; padding: 10px 15px;">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true" style="font-size: 21px;">&times;</span>
+						</button>
+						<h4 class="modal-title" id="modal-label" style="font-size: 17px;">メッセージ送信</h4>
+					</div>
+					<div class="modal-body" style="padding: 20px;">
+						<div class="row">
+							<div class="col-lg-12">
+								
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 0; display: none;" ng-style="{display: displaySendMessages == '' ? 'none' : ''}">
+									<div class="alert" ng-class="{'alert-info alert-info-ex-blue': !isError(errorsSend), 'alert-danger': isError(errorsSend)}" role="alert">
+										<button type="button" class="close" data-dismiss="alert" style="font-size: 0;">
+											<span aria-hidden="true" style="font-size: 17px;">×</span><span class="sr-only">Close</span>
+										</button>
+										<p class="text-center" ng-bind-html="displaySendMessages | lineBreak">
+										</p>
+									</div>
+								</div>	
+															
+								<div>
+									<p>
+										ユーザー名、または、メールアドレスで<br />メッセージ送信を行うユーザーを検索してください。
+									</p>
+								</div>
+								<div>
+									<div class="form-group" ng-class="{'has-error': isAttrError(errorsSend.user_name)}" style="float: left; width: 300px;">
+										<input type="text" class="form-control" ng-model="searchUser.user_name" placeholder="ユーザー名、または、メールアドレス">
+									</div>
+									<div style="float: left;">
+										<button type="button" class="btn btn-default" style="margin-left: 5px;" ng-click="getUserList(searchUser)">
+											検 索
+										</button>
+									</div>
+									<div style="clear: both;"></div>
+								</div>
+								
+								<div ng-repeat="userMessage in users" style="margin-top: 20px;">
+									<hr />
+									
+									<div>
+										<div  style="float: left; min-width: 70px;">
+											<img ng-src="{{userMessage.img_path}}" style="max-height: 70px; max-width: 70px;">
+										</div>
+										<div  style="float: left; margin-left: 10px;">
+											<a ng-bind="userMessage.user_name"></a>
+										</div>
+										<div style="float: right;">
+											<button type="button" class="btn btn-default btn-sm" ng-click="selectUser(userMessage)">
+												選 択
+											</button>
+										</div>
+										<div style="clear: both;"></div>
+										
+									</div>
+								</div>
+								
+								<div ng-show="isSelectUser()" style="margin-top: 20px;">
+									<hr />
+									<b><p style="margin-top: 10px;">
+										宛先：<a ng-bind="selectedUser.user_name"></a>
+									</p></b>
+									<p style="margin: 0 0 5px;">
+										タイトル
+									</p>
+									<div class="form-group" ng-class="{'has-error': isAttrError(errorsSend.title)}">
+										<input type="text" class="form-control" ng-model="selectedUser.title" placeholder="タイトル">
+									</div>
+									<p style="margin: 10px 0 5px;">
+										メッセージ
+									</p>
+									<div class="form-group" ng-class="{'has-error': isAttrError(errorsSend.content)}">
+										<textarea class="form-control" rows="5" style="background-color: white;" ng-model="selectedUser.content" ></textarea>
+									</div>
+									<div style="float: right; margin-top: 10px;">
+										<button type="button" class="btn btn-primary" ng-click="insertMessageThread(selectedUser)">
+											送 信
+										</button>
+									</div>
+									<div style="clear: both;"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>

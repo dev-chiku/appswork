@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja" ng-app="appswork" ng-controller="MainCtrl">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta name="description" content="アップスワークは無料で取引可能なクラウドソーシングサービスサイトです"/>
+		<meta name="keywords" content="クラウドソーシング 仕事探し 発注　受注"/>
+		<meta name="application-name" content="アップスワーク"/>
+		<meta http-equiv="x-dns-prefetch-control" content="off"/>
+		<meta http-equiv="X-FRAME-OPTIONS" content="DENY" />
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-Control" content="no-cache">
+		<meta http-equiv="X-Content-Type-Options" content="nosniff">
+		<meta name="viewport" content="width=device-width">
+		<title>アップスワーク[apps-work.com] | 無料クラウドソーシングサイト</title>
+		<link rel="alternate" hreflang="ja" href="https://apps-work.com/" />
+		<link rel="apple-touch-icon" sizes="57x57" href="/assets/apple-touch-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="/assets/apple-touch-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="/assets/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="/assets/apple-touch-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/assets/apple-touch-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="/assets/apple-touch-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="/assets/apple-touch-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="/assets/apple-touch-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon-180x180.png">
+		<link rel="icon" type="image/png" href="/assets/favicon-32x32.png" sizes="32x32">
+		<link rel="icon" type="image/png" href="/assets/android-chrome-192x192.png" sizes="192x192">
+		<link rel="icon" type="image/png" href="/assets/favicon-96x96.png" sizes="96x96">
+		<link rel="icon" type="image/png" href="/assets/favicon-16x16.png" sizes="16x16">
+		<link rel="manifest" href="/assets/manifest.json">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="msapplication-TileImage" content="/assets/mstile-144x144.png">
+		<meta name="theme-color" content="#ffffff">
+
+		<base href="/">
+		
+		<%= stylesheet_link_tag    "application", media: "all" %>
+		<%= stylesheet_link_tag "//gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css" %>
+		<%= stylesheet_link_tag "main.css" %>
+
+		<%= stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/css/bootstrap-datetimepicker.min.css" %>
+		
+		<%= csrf_meta_tags %>
+
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		
+		  ga('create', 'UA-52059753-8', 'auto');
+		  ga('send', 'pageview');
+		
+		</script>
+	</head>
+	<body>
+		<%= render 'layouts/header' %>
+		
+		<div ng-view></div>
+		
+		<%= render 'layouts/footer' %>
+		
+		<%= javascript_include_tag "application" %>
+		<%= javascript_include_tag "//gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js" %>
+		<%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js" %>
+		<%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/lang/ja.js" %>
+		<%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/js/bootstrap-datetimepicker.min.js" %>
+		<%= javascript_include_tag "//ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js" %>
+		<%= javascript_include_tag "//ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.js" %>
+		<%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js" %>
+
+		<%= javascript_include_tag "masonry.js" %>
+		<%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js" %>
+		<%= javascript_include_tag "jquery.blockUI.js" %>
+		<%= javascript_include_tag "footerFixed.js" %>
+		<%= javascript_include_tag "imagesloaded.pkgd.min.js" %>
+		<%= javascript_include_tag "Chart.min.js" %>
+		
+		<%= javascript_include_tag "ng-upload/ng-upload.js" %>
+
+		<%= javascript_include_tag "app.js" %>
+		<%= javascript_include_tag "model/model.js" %>
+		<%= javascript_include_tag "service/service.js" %>
+		<%= javascript_include_tag "controller/abstract.controller.js" %>
+		<%= javascript_include_tag "controller/main.controller.js" %>
+		<%= javascript_include_tag "controller/message.controller.js" %>
+		<%= javascript_include_tag "controller/propose.ok.message.controller.js" %>
+		<%= javascript_include_tag "controller/notice.controller.js" %>
+		<%= javascript_include_tag "controller/index.controller.js" %>
+		<%= javascript_include_tag "controller/user.regist.controller.js" %>
+		<%= javascript_include_tag "controller/user.login.controller.js" %>
+		<%= javascript_include_tag "controller/work.recruit.controller.js" %>
+		<%= javascript_include_tag "controller/work.detail.controller.js" %>
+		<%= javascript_include_tag "controller/mypage.controller.js" %>
+		<%= javascript_include_tag "controller/employer.controller.js" %>
+		<%= javascript_include_tag "controller/connection.controller.js" %>		
+	</body>
+</html>

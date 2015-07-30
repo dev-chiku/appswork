@@ -1,0 +1,510 @@
+<div class="main container">
+
+	<!-- <div id="thumbnails" ng-repeat="work in worksIndex">
+		<div class="thumb col-md-4 col-sm-5 col-xs-12 nopadding">
+			<a class="item_link" ng-href="#/work/detail/{{work.id}}"></a>
+			<div ng-style="{'padding-right': !isLastCol($index) ? '15px' : '0'}">
+				<div class="panel panel-primary">
+					<div class="panel-heading" style="background-color: #45ABFF;">
+						<h3 class="panel-title" style="font-size: 14px;"><a href="#dummy" style="color: inherit; font-weight: 600;">{{work.title}}</a></h3>
+					</div>
+					<div class="panel-body" style="padding: 10px 15px 10px 15px; line-height: normal;">
+						<div>
+							<div style="float: left; margin-top: 1px;">
+								<span class="label label-success" style="font-size: 11px;">{{work.payment_kbn_name}}</span>
+							</div>
+							<div style="float: left; margin-left: 10px;">
+								<div ng-show="isProjectPayment(work.payment_kbn)">
+									<span style="font-size: 16px; font-weight: 900; color: #ff1313;">{{work.price_kbn_name}}</span>
+								</div>
+								<div ng-show="!isProjectPayment(work.payment_kbn)">
+									<span style="font-size: 16px; font-weight: 900; color: #ff1313;">{{work.hour_price_kbn_name}}</span>
+								</div>
+							</div>
+						</div>
+						<div style="clear:both;"></div>
+						<p style="font-size: 12px; margin-top: 5px;">
+							<span style="color: #666666; text-decoration: underline;">{{work.parent_work_kbn_name}}</span>
+							<span> > </span>
+							<span style="color: #666666; text-decoration: underline;">{{work.work_kbn_name}}</span>
+						</p>
+						<hr style="margin-top: 5px; margin-bottom: 5px;">
+						<div style="float: right;">
+							<span style="font-size: 13px; font-weight: 900; margin-right: 20px;">提案数： <a href="#dummy" style="color: #666666;">{{work.propose_count}}</a> </span>
+							<span style="font-size: 13px; font-weight: 900;">{{getLimitDayString(work.limit_days)}}</span>
+						</div>
+						<div style="clear:both;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	
+	<div class="col-lg-12" style="padding-left: 4px; padding-right: 0;">
+		<div class="col-lg-9" style="padding-left: 4px; padding-right: 3px;">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" 
+				style="padding-left: 0;" 
+				ng-show="worksIndex.length == 0">
+				<div class="alert alert-info alert-info-ex-blue" role="alert" 
+					style="margin: 0px 5px 0px 20px;">
+					<p class="text-center">
+						検索結果がありません
+					</p>
+				</div>
+			</div>
+			
+			<div ng-repeat="work in worksIndex" >
+				<div style="margin-top: 10px;">
+					<div style="float: left; width: 45px;">
+						<p style="background: #f5f5f5; margin-bottom: 0; padding: 2px 5px; font-size: 11px; color: #333; font-weight: 900; text-align: center;" ng-show="!isLimitDayEnd(work.limit_days)">
+							受付中
+						</p>
+						<p style="background: #e9606d; margin-bottom: 0; width: 43px; height: 20px; font-size: 11px; color: #fff; font-weight: 900; text-align: center;" ng-show="isLimitDayEnd(work.limit_days)">
+							終了
+						</p>
+						<p style="text-align: center; color: #666666; margin-bottom: 0; margin-top: 5px;">提案</p>					
+						<p style="text-align: center; color: #ccc; margin-bottom: 0; font-size: 2rem; font-weight: 700; margin-top: -5px;">{{work.propose_count}}</p>					
+					</div>
+					<div style="margin-left: 55px; width: auto;">
+						<div style="float: left;">
+							<h3 class="panel-title" style="font-size: 1.6rem; font-weight: 700; color: #117ec6; margin-top: 2px;">
+								<a ng-href="work/detail/{{work.id}}" style="color: inherit; font-weight: 600;">{{work.title}}</a>
+							</h3>
+							<div style="overflow: hidden; margin: 10px 0 10px 0; width: 559px; height: 45px;">
+								<p style="position: relative; z-index: 1; margin: 0; line-height: 1.5; font-size: 1.1rem; color: #333; width: 559px; height: 45px;">
+									{{getContentString(work.content)}}
+								</p>
+							</div>
+							<p style="font-size: 10px; margin-top: 5px;">
+								<span style="color: #666666; text-decoration: underline;">{{work.parent_work_kbn_name}}</span>
+								<span> > </span>
+								<span style="color: #666666; text-decoration: underline;">{{work.work_kbn_name}}</span>
+							</p>
+							
+						</div>
+						
+						<div style="float: right; margin-left: 10px; width: 165px; position: relative; height: 108px;">
+							<span class="label label-success" style="font-size: 11px;">{{work.payment_kbn_name}}</span>
+							<div ng-show="isProjectPayment(work.payment_kbn)">
+								<span style="font-size: 13px; font-weight: 900; color: #ff1313;">{{work.price_kbn_name}}</span>
+							</div>
+							<div ng-show="!isProjectPayment(work.payment_kbn)">
+								<span style="font-size: 13px; font-weight: 900; color: #ff1313;">{{work.hour_price_kbn_name}}</span>
+							</div>
+							<div style="right: 0px; bottom: 0px; position:absolute;">
+								<span style="font-size: 12px; font-weight: 900;">{{getLimitDayString(work.limit_days)}}</span>
+							</div>
+							<div style="clear:both;"></div>
+						</div>
+						<div style="clear:both;"></div>
+					</div>
+					<div style="clear:both;"></div>
+					
+				</div>
+
+				<hr style="margin-top: 5px; margin-bottom: 5px;">
+			</div>
+		</div>
+		
+		<div class="col-lg-3" style="padding-left: 25px;">
+		
+			<div class="btn-group" style="float: left; ">
+				<a class="btn btn-default" style="text-align: left; width: 150px;"> 
+					<span class="dropdown" style="font-size: 13px;" ng-bind="search.order_kbn_nm">新着順</span> 
+				</a>
+				<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size: 13px !important;"> <span class="caret"></span> </a>
+				<ul class="dropdown-menu" style="margin-top :5px; width: 177px;">
+					<li class="list">
+						<a value="411" ng-click="selectDropDownItemCall($event, search, 'order_kbn', 'order_kbn_nm')">新着順</a>
+					</li>
+					<li class="divider"></li>
+					<li class="list" style="padding-bottom: 5px;">
+						<a value="412" ng-click="selectDropDownItemCall($event, search, 'order_kbn', 'order_kbn_nm')">依頼金額が大きい順</a>
+					</li>
+				</ul>
+				<input type="hidden" id="orderHidden" value="">
+			</div>
+			<a style="float: right;" class="btn btn-default" ng-click="openWorkSeachDialog()" rel="tooltip" data-original-title="検索ダイアログを表示します" data-placement="bottom"> 
+				<i class="glyphicon glyphicon-search"></i> </a>
+			<div style="clear:both;"></div>
+			
+			
+		</div>
+		
+	</div>
+	
+</div>
+
+<!-- 検索モーダル -->
+<div class="modal" id="modal-work-search" tabindex="-1">
+	<div class="modal-dialog">
+
+		<div class="modal-content" style="width: 700px;">
+			<div class="modal-header" style=" border-bottom: 1px solid #e5e5e5; padding: 10px 15px;">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true" style="font-size: 21px;">&times;</span>
+				</button>
+				<h4 class="modal-title" id="modal-label" style="font-size: 17px;">仕事検索</h4>
+			</div>
+			<div class="modal-body" style="padding: 20px;">
+				<div class="row" id="searchWorkCategoryArea" style="margin-left: 0px; margin-right: 0px; ">
+					<p>
+						仕事カテゴリ
+						<a ng-click="checkAllWorkCategory()" style="margin-left: 20px;">すべてチェック</a>
+						<a  ng-click="unCheckAllWorkCategory()" style="margin-left: 15px;">すべて解除</a>
+					</p>
+					<div class="col-lg-6" style="padding-left: 0;">
+						<!-- システム開発・運用 start -->
+						<div class="panel panel-default" style="margin-bottom: 10px;">
+							<div class="panel-heading">
+								<h4 class="panel-title" style="font-size: 13px;">
+									<a data-toggle="collapse" data-parent="#accordion" href="javascript:;" data-target="#wk-system"> システム開発・運用 </a>
+								</h4>
+							</div>
+							<div id="wk-system" class="panel-collapse collapse">
+								<div class="panel-body" style="font-size: 12px; padding: 10px 15px;">
+									<div>
+										<input type="checkbox" ng-model="search.work_kbn1">
+										&nbsp;Web・システム開発
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn2">
+										&nbsp;スマホアプリ・モバイル開発
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn3">
+										&nbsp;アプリケーション開発
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn4">
+										&nbsp;運用・管理・保守
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- システム開発・運用 end -->
+
+						<!-- デザイン制作 start -->
+						<div class="panel panel-default" style="margin-bottom: 10px;">
+							<div class="panel-heading">
+								<h4 class="panel-title" style="font-size: 13px;">
+									<a data-toggle="collapse" data-parent="#accordion" href="javascript:;" data-target="#wk-design"> デザイン制作 </a>
+								</h4>
+							</div>
+							<div id="wk-design" class="panel-collapse collapse">
+								<div class="panel-body" style="font-size: 12px; padding: 10px 15px;">
+									<div>
+										<input type="checkbox" ng-model="search.work_kbn21">
+										&nbsp;ロゴ・イラスト・キャラクター
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn22">
+										&nbsp;印刷物・DTP・その他
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn23">
+										&nbsp;POP・シール・メニュー
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn24">
+										&nbsp;看板・地図・インフォグラフィック
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn25">
+										&nbsp;プロダクト・3D
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- デザイン制作 end -->
+
+						<!-- タスク・作業 start -->
+						<div class="panel panel-default" style="margin-bottom: 10px;">
+							<div class="panel-heading">
+								<h4 class="panel-title" style="font-size: 13px;">
+									<a data-toggle="collapse" data-parent="#accordion" href="javascript:;" data-target="#wk-task"> タスク・作業 </a>
+								</h4>
+							</div>
+							<div id="wk-task" class="panel-collapse collapse">
+								<div class="panel-body" style="font-size: 12px; padding: 10px 15px;">
+									<div>
+										<input type="checkbox" ng-model="search.work_kbn41">
+										&nbsp;データ作成・テキスト入力
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn42">
+										&nbsp;レビュー・投稿・アンケート
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn43">
+										&nbsp;調査・分析・その他
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn44">
+										&nbsp;内職・軽作業・代行
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- タスク・作業 end -->
+
+						<!-- 翻訳 start -->
+						<div class="panel panel-default" style="margin-bottom: 10px;">
+							<div class="panel-heading">
+								<h4 class="panel-title" style="font-size: 13px;">
+									<a data-toggle="collapse" data-parent="#accordion" href="javascript:;" data-target="#wk-translation"> 翻訳 </a>
+								</h4>
+							</div>
+							<div id="wk-translation" class="panel-collapse collapse">
+								<div class="panel-body" style="font-size: 12px; padding: 10px 15px;">
+									<div>
+										<input type="checkbox" ng-model="search.work_kbn61">
+										&nbsp;英語翻訳・英文翻訳
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn62">
+										&nbsp;中国語翻訳
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn63">
+										&nbsp;韓国語翻訳
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn64">
+										&nbsp;フランス語翻訳
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn65">
+										&nbsp;スペイン語翻訳
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn66">
+										&nbsp;ドイツ語翻訳
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn67">
+										&nbsp;その他翻訳
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn68">
+										&nbsp;映像翻訳・出版翻訳・メディア翻訳
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 翻訳・通訳サービス end -->
+					</div>
+
+					<div class="col-lg-6">
+
+						<!-- Web制作・Webデザイン start -->
+						<div class="panel panel-default" style="margin-bottom: 10px;">
+							<div class="panel-heading">
+								<h4 class="panel-title" style="font-size: 13px;">
+									<a data-toggle="collapse" data-parent="#accordion" href="javascript:;" data-target="#wk-web-design"> Web制作・Webデザイン </a>
+								</h4>
+							</div>
+							<div id="wk-web-design" class="panel-collapse collapse">
+								<div class="panel-body" style="font-size: 12px; padding: 10px 15px;">
+									<div>
+										<input type="checkbox" ng-model="search.work_kbn11">
+										&nbsp;ウェブサイト制作・デザイン
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn12">
+										&nbsp;スマートフォン・モバイルサイト制作
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn13">
+										&nbsp;バナー・アイコン・ボタン
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn14">
+										&nbsp;ECサイト・ネットショップ構築・運用
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn15">
+										&nbsp;Webマーケティング・HP集客
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn16">
+										&nbsp;運営・更新・保守・SNS運用
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Web制作・Webデザイン end -->
+
+						<!-- ライティング・ネーミング start -->
+						<div class="panel panel-default" style="margin-bottom: 10px;">
+							<div class="panel-heading">
+								<h4 class="panel-title" style="font-size: 13px;">
+									<a data-toggle="collapse" data-parent="#accordion" href="javascript:;" data-target="#wk-writing"> ライティング・ネーミング </a>
+								</h4>
+							</div>
+							<div id="wk-writing" class="panel-collapse collapse">
+								<div class="panel-body" style="font-size: 12px; padding: 10px 15px;">
+									<div>
+										<input type="checkbox" ng-model="search.work_kbn31">
+										&nbsp;ライティング
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn32">
+										&nbsp;ネーミング・コピー
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn33">
+										&nbsp;編集・校正
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- ライティング・ネーミング end -->
+
+						<!-- マルチメディア start -->
+						<div class="panel panel-default" style="margin-bottom: 10px;">
+							<div class="panel-heading">
+								<h4 class="panel-title" style="font-size: 13px;">
+									<a data-toggle="collapse" data-parent="#accordion" href="javascript:;" data-target="#wk-multimedia"> マルチメディア </a>
+								</h4>
+							</div>
+							<div id="wk-multimedia" class="panel-collapse collapse">
+								<div class="panel-body" style="font-size: 12px; padding: 10px 15px;">
+									<div>
+										<input type="checkbox" ng-model="search.work_kbn51">
+										&nbsp;動画・写真・画像
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn52">
+										&nbsp;漫画・アニメーション・ドラマ
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn53">
+										&nbsp;音楽・音源・ナレーション
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- マルチメディア end -->
+
+						<!-- 企画・リサーチ・その他 start -->
+						<div class="panel panel-default" style="margin-bottom: 10px;">
+							<div class="panel-heading">
+								<h4 class="panel-title" style="font-size: 13px;">
+									<a data-toggle="collapse" data-parent="#accordion" href="javascript:;" data-target="#wk-plan"> 企画・リサーチ・その他 </a>
+								</h4>
+							</div>
+							<div id="wk-plan" class="panel-collapse collapse">
+								<div class="panel-body" style="font-size: 12px; padding: 10px 15px;">
+									<div>
+										<input type="checkbox" ng-model="search.work_kbn71">
+										&nbsp;企画・PR
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn72">
+										&nbsp;リサーチ・分析・解析
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn73">
+										&nbsp;セールス・ビジネスサポート
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn74">
+										&nbsp;資料作成サポート
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn75">
+										&nbsp;コンサルティング
+									</div>
+									<div style="margin-top: 7px;">
+										<input type="checkbox" ng-model="search.work_kbn76">
+										&nbsp;その他
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 企画・リサーチ・その他 start -->						
+					</div>
+					
+					<div style="margin-left: 5px; font-size: 12px;" ng-bind-html="getCheckWorkCategories() | lineBreak"></div>
+					
+				</div>
+				
+				<hr style="margin-top: 10px !important; margin-bottom: 10px !important;" />
+				
+				<div class="row" style="margin-left: 0px; margin-right: 0px; ">
+					<p>
+						報酬方式
+					</p>
+					<input type="radio" name="radioSearchPayment" value="121" ng-model="search.payment_kbn" ng-change="changePaymentKbn()">
+					時給制
+					<input type="radio" name="radioSearchPayment" value="122" ng-model="search.payment_kbn" style="margin-left: 10px;" ng-change="changePaymentKbn()">
+					固定報酬
+					<input type="radio" name="radioSearchPayment" value="123" ng-model="search.payment_kbn" style="margin-left: 10px;" ng-change="changePaymentKbn()">
+					両方
+				</div>
+				
+				<hr style="margin-top: 10px !important; margin-bottom: 10px !important;" />
+				
+				<div class="row" style="margin-left: 0px; margin-right: 0px; ">
+					<p>
+						報酬額
+					</p>
+					<label>時給</label>
+					<input type="number" class="input-sm" ng-model="search.hourPriceStart" style="margin-left: 10px; text-align: right; width: 105px;" ng-disabled="isDisablePaymentKbn(true)">
+					<span>〜</span>
+					<input type="number" class="input-sm" ng-model="search.hourPriceEnd" style="text-align: right; width: 105px;" ng-disabled="isDisablePaymentKbn(true)">
+					
+					<label style="margin-left: 20px; ">プロジェクト報酬</label>
+					<input type="number" class="input-sm" ng-model="search.projectPriceStart" style="margin-left: 10px; text-align: right; width: 105px;" ng-disabled="isDisablePaymentKbn(false)">
+					<span>〜</span>
+					<input type="number" class="input-sm" ng-model="search.projectPriceEnd" style="text-align: right; width: 105px;" ng-disabled="isDisablePaymentKbn(false)">
+				</div>				
+				
+				<hr style="margin-top: 10px !important; margin-bottom: 10px !important;" />
+				
+				<div class="row" style="margin-left: 0px; margin-right: 0px; ">
+					<p>
+						その他
+					</p>
+					<input type="checkbox" ng-model="search.favorite_only_flg">
+					お気に入り分のみ
+					
+					<input type="checkbox" ng-model="search.exclude_end_flg" style="margin-left: 10px;">
+					依頼終了分を除く
+					
+				</div>				
+				
+				<hr style="margin-top: 10px !important; margin-bottom: 10px !important;" />
+				
+				<div class="row" style="margin-left: 0px; margin-right: 0px; ">
+					<p>
+						並び替え
+					</p>
+					<div class="btn-group">
+						<a class="btn btn-default" style="width: 150px; text-align: left;"> <span class="dropdown" style="font-size: 13px;">{{search.order_kbn_nm}}</span> </a>
+						<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size: 13px !important;"> <span class="caret"></span> </a>
+						<ul class="dropdown-menu" style="margin-top :5px;">
+							<li>
+								<a value="411" ng-click="selectDropDownItem($event, search, 'order_kbn', 'order_kbn_nm')">新着順</a>
+							</li>
+							<li class="divider"></li>
+							<li style="padding-bottom: 5px;">
+								<a value="412" ng-click="selectDropDownItem($event, search, 'order_kbn', 'order_kbn_nm')">依頼金額が大きい順</a>
+							</li>
+						</ul>
+					</div>
+				</div>					
+			</div>
+			<div class="modal-footer" style=" border-top: 1px solid #e5e5e5;">
+				<button type="button" class="btn btn-default" ng-click="getWorkList(search, true)">
+					<span class="glyphicon glyphicon-search"></span>
+					&nbsp;検 索
+				</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					閉じる
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

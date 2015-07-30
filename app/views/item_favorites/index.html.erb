@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Item Favorites</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>User</th>
+      <th>Create user</th>
+      <th>Update user</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @item_favorites.each do |item_favorite| %>
+      <tr>
+        <td><%= item_favorite.item_id %></td>
+        <td><%= item_favorite.user_id %></td>
+        <td><%= item_favorite.create_user_id %></td>
+        <td><%= item_favorite.update_user_id %></td>
+        <td><%= link_to 'Show', item_favorite %></td>
+        <td><%= link_to 'Edit', edit_item_favorite_path(item_favorite) %></td>
+        <td><%= link_to 'Destroy', item_favorite, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Item favorite', new_item_favorite_path %>

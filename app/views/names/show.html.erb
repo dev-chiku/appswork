@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name kbn:</strong>
+  <%= @name.name_kbn %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @name.name_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @name.name %>
+</p>
+
+<p>
+  <strong>Create user:</strong>
+  <%= @name.create_user_id %>
+</p>
+
+<p>
+  <strong>Update user:</strong>
+  <%= @name.update_user_id %>
+</p>
+
+<%= link_to 'Edit', edit_name_path(@name) %> |
+<%= link_to 'Back', names_path %>

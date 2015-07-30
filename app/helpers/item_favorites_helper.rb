@@ -1,0 +1,2 @@
+module ItemFavoritesHelper
+end

@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Item:</strong>
+  <%= @item_propose.item_id %>
+</p>
+
+<p>
+  <strong>Payment kbn:</strong>
+  <%= @item_propose.payment_kbn %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @item_propose.price %>
+</p>
+
+<p>
+  <strong>Noki:</strong>
+  <%= @item_propose.noki %>
+</p>
+
+<p>
+  <strong>Hour price kbn:</strong>
+  <%= @item_propose.hour_price_kbn %>
+</p>
+
+<p>
+  <strong>Week hour kbn:</strong>
+  <%= @item_propose.week_hour_kbn %>
+</p>
+
+<p>
+  <strong>Week hour period kbn:</strong>
+  <%= @item_propose.week_hour_period_kbn %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @item_propose.content %>
+</p>
+
+<p>
+  <strong>Create user:</strong>
+  <%= @item_propose.create_user_id %>
+</p>
+
+<p>
+  <strong>Update user:</strong>
+  <%= @item_propose.update_user_id %>
+</p>
+
+<%= link_to 'Edit', edit_item_propose_path(@item_propose) %> |
+<%= link_to 'Back', item_proposes_path %>

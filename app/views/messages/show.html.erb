@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Message kbn:</strong>
+  <%= @message.message_kbn %>
+</p>
+
+<p>
+  <strong>Parent:</strong>
+  <%= @message.parent_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @message.user_id %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @message.title %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @message.content %>
+</p>
+
+<p>
+  <strong>Create user:</strong>
+  <%= @message.create_user_id %>
+</p>
+
+<p>
+  <strong>Update user:</strong>
+  <%= @message.update_user_id %>
+</p>
+
+<%= link_to 'Edit', edit_message_path(@message) %> |
+<%= link_to 'Back', messages_path %>

@@ -1,0 +1,166 @@
+<div id="fb-root"></div>
+
+<div id="main-root">
+
+<div id="wrap">
+
+	<nav class="navbar navbar-default navbar-fixed-top nav-top-custom">
+		<div class="container">
+			<div class="navbar-header nav-title-left">
+
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-id">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+
+				<a class="navbar-brand nav-title-text" href="/" style="font-family: sans-serif; font-weight: 600; font-size: 22px !important; color: #666666;"> AppsWork<span style="font-size: 8px; margin-left: 5px; font-weight: 900;">BETA</span> <span style="font-size: 14px; font-weight: 500;"> [アップスワーク]</span> </a>
+			</div>
+
+			<div class="collapse navbar-collapse" id="navbar-collapse-id">
+				<ul class="nav navbar-nav navbar-right change-header">
+
+					<% if session[:user_id].blank? then %>
+					
+					<li class="login-header" style="display: none;">
+						<form class="navbar-form" style="padding: 0 10px; margin-right: 210px;">
+							<a href="connection" class="btn btn-default" style="height: 35px; width: 53px;" rel="tooltip" data-original-title="つながりの表示" data-placement="bottom"> 
+								<img src="assets/btn-connect.png" style="height: 27px;margin-top: -4px; margin-left: -9px;"> 
+							</a>
+						</form>
+					</li>
+
+					<li class="logout-header">
+						<form class="navbar-form" style="padding: 0 10px;">
+							<a id="btnLogin" class="btn btn-default" ng-click="openLoginDialog()"> <i class="glyphicon glyphicon-log-in"></i>&nbsp;ログイン </a>
+						</form>
+					</li>
+					<li class="logout-header">
+						<form class="navbar-form" style="padding: 0 10px; margin-right: 8px;">
+							<a id="btnFirst" class="btn btn-default" ng-click="openFirstDialog()"> <i class="glyphicon glyphicon-user"></i>&nbsp;はじめての方 </a>
+						</form>
+					</li>
+					<li class="login-header" style="display: none;">
+						<form class="navbar-form" style="padding: 0 10px; margin-right: 25px;">
+							<a class="btn btn-default" style="height: 34px;padding-top: 5px;" ng-click="openRecruitDialog()">
+								<i class="glyphicon glyphicon-plus"></i>&nbsp;依頼登録 (無料) 
+							</a>
+						</form>
+					</li>
+					<li>
+						<form class="navbar-form" style="padding: 0 10px;">
+							<div class="btn-group">
+								<a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" style="padding: 3px 8px;">
+									<i style="font-size: 23px;" class="glyphicon glyphicon-info-sign"></i> 
+								</a>
+								<ul class="dropdown-menu" style="margin-top :5px;">
+									<li>
+										<a ng-click="openInfoDialog()">お知らせ</a>
+									</li>
+									<li class="divider"></li>
+									<li>
+										<a href="https://bitbucket.org/chiku_developer/appswork/wiki/browse" target="_blank">使い方(Wiki)</a>
+									</li>
+									<li class="divider"></li>
+									<li>
+										<a href="https://bitbucket.org/chiku_developer/appswork/issues?status=new&status=open" target="_blank">バグ報告</a>
+									</li>
+									<li class="divider"></li>
+									<li style="padding-bottom: 5px;">
+										<a href="https://docs.google.com/forms/d/16F3QzCNbR_dPtqy5ZqfsO6U-a67Quy8NbXh1OxGmAXA/viewform?usp=send_form" target="_blank">お問い合わせ</a>
+									</li>
+								</ul>
+							</div>
+						</form>
+					</li>
+					<li class="login-header" style="display: none;">
+						<form class="navbar-form" style="padding: 0 10px;">
+							<a href="message" class="btn btn-default btn-sm" style="padding: 3px 8px;" rel="tooltip" data-original-title="メッセージ" data-placement="bottom"> 
+								<i style="font-size: 23px;" class="glyphicon glyphicon-envelope"></i> </a>
+						</form>
+						<span class="top-badge red" ng-bind="userModel.notification_msg_count" style="top: 10px; right: 2px;" ng-cloak ng-show="userModel.notification_msg_count > 0"></span>
+					</li>
+					<li class="login-header" style="display: none;">
+						<form class="navbar-form" style="padding: 0 10px; margin-right: 8px;">
+							<a class="btn btn-default btn-sm" style="padding: 3px 8px;" rel="tooltip" data-original-title="MYページ" data-placement="bottom"> 
+								<i style="font-size: 23px;" class="glyphicon glyphicon-user" ng-click="openMypageDialog()"></i> </a>
+						</form>
+					</li>
+
+					<% else %>
+
+					<li class="login-header">
+						<form class="navbar-form" style="padding: 0 10px; margin-right: 210px;">
+							<a href="connection" class="btn btn-default" style="height: 35px; width: 53px;" rel="tooltip" data-original-title="つながりの表示" data-placement="bottom"> 
+								<img src="assets/btn-connect.png" style="height: 27px;margin-top: -4px; margin-left: -9px;"> 
+							</a>
+						</form>
+					</li>
+
+					<li class="logout-header" style="display: none;">
+						<form class="navbar-form" style="padding: 0 10px;">
+							<a id="btnLogin" class="btn btn-default" ng-click="openLoginDialog()"> <i class="glyphicon glyphicon-log-in"></i>&nbsp;ログイン </a>
+						</form>
+					</li>
+					<li class="logout-header" style="display: none;">
+						<form class="navbar-form" style="padding: 0 10px; margin-right: 8px;">
+							<a id="btnFirst" class="btn btn-default" ng-click="openFirstDialog()"> <i class="glyphicon glyphicon-user"></i>&nbsp;はじめての方 </a>
+						</form>
+					</li>
+					<li class="login-header">
+						<form class="navbar-form" style="padding: 0 10px; margin-right: 25px;">
+							<a class="btn btn-default" style="height: 34px;padding-top: 5px;" ng-click="openRecruitDialog()">
+								<i class="glyphicon glyphicon-plus"></i>&nbsp;依頼登録 (無料) 
+							</a>
+						</form>
+					</li>
+					<li>
+						<form class="navbar-form" style="padding: 0 10px;">
+							<div class="btn-group">
+								<a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" style="padding: 3px 8px;">
+									<i style="font-size: 23px;" class="glyphicon glyphicon-info-sign"></i> 
+								</a>
+								<span class="top-badge red" ng-bind="userModel.notification_inf_count" ng-cloak ng-show="userModel.notification_inf_count > 0" style="z-index: 9999;"></span>
+								<ul class="dropdown-menu" style="margin-top :5px;">
+									<li>
+										<a ng-click="openInfoDialog()">お知らせ 
+											<span class="top-badge red" ng-bind="userModel.notification_inf_count" ng-cloak ng-show="userModel.notification_inf_count > 0" style="z-index: 9999; top: 10px; right: 5px;"></span>
+										</a>
+									</li>
+									<li class="divider"></li>
+									<li>
+										<a href="https://bitbucket.org/chiku_developer/appswork/wiki/browse" target="_blank">使い方(Wiki)</a>
+									</li>
+									<li class="divider"></li>
+									<li>
+										<a href="https://bitbucket.org/chiku_developer/appswork/issues?status=new&status=open" target="_blank">バグ報告</a>
+									</li>
+									<li class="divider"></li>
+									<li style="padding-bottom: 5px;">
+										<a href="https://docs.google.com/forms/d/16F3QzCNbR_dPtqy5ZqfsO6U-a67Quy8NbXh1OxGmAXA/viewform?usp=send_form" target="_blank">お問い合わせ</a>
+									</li>
+								</ul>
+							</div>
+							<span id="tooltip-inf" rel="tooltip" data-original-title="お知らせなど" data-placement="bottom"></span>
+						</form>
+					</li>
+					<li class="login-header">
+						<form class="navbar-form" style="padding: 0 10px;">
+							<a href="message" class="btn btn-default btn-sm" style="padding: 3px 8px;" rel="tooltip" data-original-title="メッセージ" data-placement="bottom"> 
+								<i style="font-size: 23px;" class="glyphicon glyphicon-envelope"></i> </a>
+						</form>
+						<span class="top-badge red" ng-bind="userModel.notification_msg_count" style="top: 10px; right: 2px;" ng-cloak ng-show="userModel.notification_msg_count > 0"></span>
+					</li>
+					<li class="login-header">
+						<form class="navbar-form" style="padding: 0 10px; margin-right: 8px;">
+							<a class="btn btn-default btn-sm" style="padding: 3px 8px;" rel="tooltip" data-original-title="MYページ" data-placement="bottom"> 
+								<i style="font-size: 23px;" class="glyphicon glyphicon-user" ng-click="openMypageDialog()"></i> </a>
+						</form>
+					</li>
+										
+					<% end %>
+				</ul>
+			</div>
+		</div>
+	</nav>

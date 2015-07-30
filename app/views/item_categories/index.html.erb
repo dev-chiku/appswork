@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Item Categories</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Category</th>
+      <th>Create user</th>
+      <th>Update user</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @item_categories.each do |item_category| %>
+      <tr>
+        <td><%= item_category.item_id %></td>
+        <td><%= item_category.category_id %></td>
+        <td><%= item_category.create_user_id %></td>
+        <td><%= item_category.update_user_id %></td>
+        <td><%= link_to 'Show', item_category %></td>
+        <td><%= link_to 'Edit', edit_item_category_path(item_category) %></td>
+        <td><%= link_to 'Destroy', item_category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Item category', new_item_category_path %>

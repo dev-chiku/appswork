@@ -1,0 +1,108 @@
+	<div class="main container">
+	
+		<div class="row">
+			<h4 style="margin-left: 20px;">あなたのつながり</h4>
+	
+			<hr />
+	
+			<div class="row" style="margin-top: 20px; padding-left: 35px;" >
+				<h4 style="margin: 0 0px 15px 300px; font-weight: 900; font-size: 20px;">{{getChartKbnName()}}</h4>
+				<div style="float: left;" class="btn-group-vertical">
+					<a ng-click="selectChartKbn($event, 1)" href="javascript:;" class="btn btn-default btn-default-ex-active" id="btn-this-week">今 週</a>
+					<a ng-click="selectChartKbn($event, 2)" href="javascript:;" class="btn btn-default">今 月</a>
+					<a ng-click="selectChartKbn($event, 3)" href="javascript:;" class="btn btn-default">すべて</a>
+				</div>
+	
+				<div style="float: left; margin-left: 100px;">
+					<canvas id="pie-chart" height="250" width="250"></canvas>
+					<div id="pie-legend"></div>
+				</div>
+	
+				<div style="float: left; margin-left: 100px;" ng-show="{display: isBarChartShow ? '' : 'none'}">
+					<canvas id="bar-chart" height="300" width="500"></canvas>
+				</div>
+	
+			</div>
+		</div>
+	
+		<div class="row" style="margin-top: 30px;">
+			<ul class="nav nav-tabs">
+				<li class="active">
+					<a href="javascript:;" data-toggle="tab" data-target="#all-connect">すべてのつながり</a>
+				</li>
+				<li>
+					<a href="javascript:;" data-toggle="tab" data-target="#new-connect">新しいつながり</a>
+				</li>
+				<li>
+					<a href="javascript:;" data-toggle="tab" data-target="#re-connect">再度のつながり</a>
+				</li>
+			</ul>
+	
+			<div class="tab-content">
+	
+				<div class="tab-pane fade active in" id="all-connect" style="padding: 20px;">
+					<div ng-show="!allList || allList.length == 0">
+						つながりはありません。
+					</div>
+					<div ng-repeat="data in allList">
+						<div class="row">
+							<div class="col-lg-7" style="margin-bottom: 5px;">
+								<img ng-src="{{data.img_path}}" style="float: left; max-height: 50px; max-width: 50px;">
+								<div style="float: left; margin-left: 20px; width: 80%;">
+									<div style="height: 46px; overflow: hidden;">
+										<p style="height: 46px; line-height: 1.5;" ng-bind-html="getMessage(data) | doTrustAsHtml">ああさんがあなたの募集「」を閲覧しました。あああああああああああああ</p>
+									</div>
+									<p style="float: right; font-size: 10px; margin-bottom: 0;">{{data.created_at_str}}</p>
+								</div>
+								<div style="clear: both;"></div>
+								<hr />
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="tab-pane fade" id="new-connect" style="padding: 20px;">
+					<div ng-show="!newList || newList.length == 0">
+						つながりはありません。
+					</div>
+					<div ng-repeat="data in newList">
+						<div class="row">
+							<div class="col-lg-7" style="margin-bottom: 5px;">
+								<img ng-src="{{data.img_path}}" style="float: left; max-height: 50px; max-width: 50px;">
+								<div style="float: left; margin-left: 20px; width: 80%;">
+									<div style="height: 46px; overflow: hidden;">
+										<p style="height: 46px; line-height: 1.5;" ng-bind-html="getMessage(data) | doTrustAsHtml">ああさんがあなたの募集「」を閲覧しました。あああああああああああああ</p>
+									</div>
+									<p style="float: right; font-size: 10px; margin-bottom: 0;">{{data.created_at_str}}</p>
+								</div>
+								<div style="clear: both;"></div>
+								<hr />
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="tab-pane fade" id="re-connect" style="padding: 20px;">
+					<div ng-show="!reList || reList.length == 0">
+						つながりはありません。
+					</div>
+					<div ng-repeat="data in reList">
+						<div class="row">
+							<div class="col-lg-7" style="margin-bottom: 5px;">
+								<img ng-src="{{data.img_path}}" style="float: left; max-height: 50px; max-width: 50px;">
+								<div style="float: left; margin-left: 20px; width: 80%;">
+									<div style="height: 46px; overflow: hidden;">
+										<p style="height: 46px; line-height: 1.5;" ng-bind-html="getMessage(data) | doTrustAsHtml">ああさんがあなたの募集「」を閲覧しました。あああああああああああああ</p>
+									</div>
+									<p style="float: right; font-size: 10px; margin-bottom: 0;">{{data.created_at_str}}</p>
+								</div>
+								<div style="clear: both;"></div>
+								<hr />
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+
+	</div>

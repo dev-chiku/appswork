@@ -1,0 +1,65 @@
+<%= form_for(@item) do |f| %>
+  <% if @item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+      <% @item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :payment_kbn %><br>
+    <%= f.number_field :payment_kbn %>
+  </div>
+  <div class="field">
+    <%= f.label :price %><br>
+    <%= f.number_field :price %>
+  </div>
+  <div class="field">
+    <%= f.label :noki %><br>
+    <%= f.date_select :noki %>
+  </div>
+  <div class="field">
+    <%= f.label :week_hour %><br>
+    <%= f.number_field :week_hour %>
+  </div>
+  <div class="field">
+    <%= f.label :period_kbn %><br>
+    <%= f.number_field :period_kbn %>
+  </div>
+  <div class="field">
+    <%= f.label :option_kbn %><br>
+    <%= f.number_field :option_kbn %>
+  </div>
+  <div class="field">
+    <%= f.label :limit_date %><br>
+    <%= f.date_select :limit_date %>
+  </div>
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :content %><br>
+    <%= f.text_area :content %>
+  </div>
+  <div class="field">
+    <%= f.label :img_path %><br>
+    <%= f.text_field :img_path %>
+  </div>
+  <div class="field">
+    <%= f.label :create_user_id %><br>
+    <%= f.number_field :create_user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :update_user_id %><br>
+    <%= f.number_field :update_user_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

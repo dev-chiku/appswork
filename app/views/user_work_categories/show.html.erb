@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @user_work_category.user_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user_work_category.name_id %>
+</p>
+
+<%= link_to 'Edit', edit_user_work_category_path(@user_work_category) %> |
+<%= link_to 'Back', user_work_categories_path %>

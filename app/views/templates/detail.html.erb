@@ -1,0 +1,459 @@
+	<div class="main container">
+	
+		<div class="row">
+			<h4 ng-bind="workModel.title" style="margin-left: 20px;"></h4>
+	
+			<div style="float: left">
+				<p style="font-size: 12px; margin-top: 5px; margin-left: 20px;">
+					<span style="color: #666666; text-decoration: underline;">{{workModel.work_kbn_nm}}</span>
+					<span> > </span>
+					<span style="color: #666666; text-decoration: underline;">{{workModel.work_kbn_detail_nm}}</span>
+				</p>
+			</div>
+	
+			<div style="float: right">
+				<div style="float: left;" class="fb-like" data-href="{{getCurrentFullUrl()}}" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+				<div style="float: right; margin-left: 10px; margin-top: 3px;" data-url="{{getCurrentFullUrl()}}" data-counturl="{{getCurrentFullUrl()}}">
+					<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+				</div>
+			</div>
+			<div style="clear: both;"></div>
+	
+			<hr />
+	
+			<div class="row" style="margin-top: 20px; padding-left: 20px;" >
+				<!-- work content start -->
+				<div class="col-md-6">
+					<div style="padding-right: 15px;">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<h3 class="panel-title" style="font-size: 14px; color: inherit; font-weight: 600;">仕事概要</h3>
+							</div>
+							<div class="panel-body" style="padding: 10px 15px 10px 15px; line-height: normal;">
+								<p style="font-size: 13px; margin-top: 1px; margin-bottom: 5px; margin-left: 2px;">
+									クライアント：
+									<a href="employer/{{workModel.create_user_id}}" style="text-decoration: underline;">{{workModel.user_name}}</a>
+								</p>
+								<div ng-show="isProjectPayment()">
+									<div style="float: left; margin-top: 5px;">
+										<span class="label label-success" style="font-size: 11px;">プロジェクト</span>
+									</div>
+									<div style="float: left; margin-left: 10px;">
+										<span style="font-size: 16px; font-weight: 900; color: #ff1313;">{{workModel.price_kbn_nm}}</span>
+									</div>
+								</div>
+								<div ng-show="!isProjectPayment()">
+									<div style="float: left; margin-top: 5px;">
+										<span class="label label-success" style="font-size: 11px;">時給制</span>
+									</div>
+									<div style="float: left; margin-left: 10px;">
+										<span style="font-size: 16px; font-weight: 900; color: #ff1313;">{{workModel.hour_price_kbn_nm}}</span>
+									</div>
+								</div>
+								<div style="clear:both;"></div>
+								<p style="font-size: 12px; margin-top: 10px;">
+									<a href="javascript:;" style="color: #666666; text-decoration: underline;">{{workModel.work_kbn_nm}}</a>
+									<span> > </span>
+									<a href="javascript:;" style="color: #666666; text-decoration: underline;">{{workModel.work_kbn_detail_nm}}</a>
+								</p>
+								<div ng-show="isProjectPayment()">
+									<p style="font-size: 12px; margin-top: 5px; float: left;">
+										希望納期：{{workModel.noki}}
+									</p>
+									<p style="font-size: 14px; font-weight: 900; margin-top: 5px; float: right;" ng-bind-html="getEndDayString(workModel.limit_days) | lineBreak"></p>
+									<div style="clear: both"></div>
+								</div>
+								<div ng-show="!isProjectPayment()">
+									<p style="font-size: 12px; margin-top: 5px; float: left;">
+										週に<b>{{workModel.week_hour_kbn_nm}}</b> 相当の仕事を <b>{{workModel.week_hour_period_kbn_nm}}</b> の期間を依頼予定
+									</p>
+									<p ng-show="isLimitDays()" style="font-size: 14px; font-weight: 900; margin-top: 5px; float: right;" ng-bind-html="getEndDayString(workModel.limit_days) | lineBreak"></p>
+									<div style="clear: both"></div>
+								</div>
+								<hr style="margin-top: 5px; margin-bottom: 5px;">
+	
+								<div style="float: right; margin-top: 5px;">
+									<button type="button" class="btn btn-default btn-sm" style="margin-left: 5px;" ng-disabled="isPreview()" ng-click="updateFavorite()" >
+										<i class="glyphicon glyphicon-bookmark"></i>&nbsp;{{getItemFavoriteString()}}
+									</button>
+								</div>
+								<div style="clear:both;"></div>
+							</div>
+						</div>
+					</div>
+	
+					<div style="padding-right: 15px;">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<h3 class="panel-title" style="font-size: 14px; color: inherit; font-weight: 600;">仕事詳細</h3>
+							</div>
+							<div class="panel-body" style="padding: 10px 15px 10px 15px; line-height: normal;">
+								<pre class="back-none">{{workModel.content}}</pre>
+							</div>
+						</div>
+					</div>
+	
+					<div style="padding-right: 15px;" id="question-list" >
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title" style="font-size: 14px; color: inherit;">質問一覧</h3>
+							</div>
+							<div class="panel-body" style="padding: 10px 15px 10px 15px; line-height: normal;">
+								<div>
+									<pre ng-show="!workCommentsModel || !workCommentsModel.length || workCommentsModel.length == 0">現在質問はありません。</pre>
+									<div ng-repeat="comment in workCommentsModel">
+										<div style="margin-top: 10px; margin-bottom: 10px;">
+											<div>
+												<div style="font-size: 10px; float: left; margin-left: 10px; margin-bottom: 10px;">
+													<a ng-href="employer/{{comment.create_user_id}}">{{comment.user_name}}</a>
+												</div>
+												<div style="float: right; font-size: 10px;">
+													{{comment.created_at_str}}
+												</div>
+												<div style="clear: both;"></div>
+											</div>
+	
+											<div style="font-size: 12px; margin-left: 10px; margin-bottom: 10px;" ng-bind-html="comment.comment | lineBreak"></div>
+	
+											<hr />
+										</div>
+									</div>
+								</div>
+	
+								<div class="col-lg-12" style="padding :0;">
+									<div id="message" class="alert alert-info alert-danger" role="alert"
+									style="margin-bottom: 10px;"
+									ng-style="{display: displayCommentMessages != '' ? '' : 'none'}">
+										<p class="text-center" ng-bind-html="displayCommentMessages | lineBreak"></p>
+									</div>
+								</div>
+								<textarea class="form-control" rows="5" style="background-color: white;" ng-model="workCommentModel.comment" placeholder="質問内容を入力してください" ></textarea>
+	
+								<div style="float: right; margin-top: 5px;">
+									<button type="button" class="btn btn-primary btn-xs" ng-disabled="isPreview()" ng-click="insertComment(workCommentModel)">
+										送 信
+									</button>
+								</div>
+								<div style="clear: both;"></div>
+	
+							</div>
+						</div>
+					</div>
+	
+				</div>
+				<!-- work content end -->
+	
+				<!-- work entry start -->
+				<div class="col-md-6">
+					<div class="row">
+						<div class="col-md-6">
+							<ul class="list-group">
+								<li class="list-group-item">
+									<span class="badge">{{workModel.view_count}}</span>
+									閲覧件数
+								</li>
+								<li class="list-group-item">
+									<span class="badge">{{workModel.favorite_count}}</span>
+									気になる件数
+								</li>
+								<li class="list-group-item">
+									<span class="badge">{{workModel.propose_count}}</span>
+									提案件数
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+					<div ng-show="isEdit()">
+						<button type="button" class="btn btn-primary" ng-click="editWorkRecruit();">
+							<i class="glyphicon glyphicon-edit"></i>&nbsp;依頼を編集する
+						</button>
+						<br />
+						<p style=" font-size: 12px; margin: 2px 0 0 0;">(募集を終了する場合、募集の締め切りに本日以前を設定する事により募集が終了されます。)</p>
+					</div>
+					
+					<div class="row" ng-show="workModel.owner_flg == 1">
+						<div class="panel panel-default" style="margin-top: 20px;margin-left: 15px;">
+							<div class="panel-heading">
+								<h4 class="panel-title" style="font-size: 13px; float: left; margin-top: 6px;">
+									<a data-toggle="collapse" data-parent="#accordion" href="javascript:;" data-target="#propose-list"> 提案一覧 (依頼者以外は閲覧できません) </a>
+								</h4>
+								<div style="clear: both;"></div>
+							</div>
+							<div id="propose-list" class="panel-collapse collapse in" aria-expanded="true">
+								<div class="panel-body" style="font-size: 12px; padding: 10px 15px;">
+									<div ng-show="!workModel.proposes || workModel.proposes == 0">提案はまだありません</div>
+									<div ng-repeat="propose in workModel.proposes">
+										<div class="panel panel-default" style="margin-bottom: 10px;">
+											<div class="panel-heading">
+												<h4 class="panel-title" style="font-size: 13px; float: left; margin-top: 6px;"><a data-toggle="collapse" data-parent="#accordion" href="javascript:;" data-target="#my-entry-user{{propose.user_id}}"> {{propose.user_name}}さんの提案 </a></h4>
+												<button type="button" class="btn btn-default btn-sm" style="float: right;" ng-click="doOkPropose(propose)" ng-disabled="propose.ok_flg == 1">
+													<i class="glyphicon glyphicon-ok-sign"></i>&nbsp;{{getOkProposeString(propose.ok_flg)}}
+												</button>
+												<div style="clear: both;"></div>
+											</div>
+											<div id="my-entry-user{{propose.user_id}}" class="panel-collapse collapse">
+												<div class="panel-body" style="font-size: 12px; padding: 10px 15px;">
+													<div ng-show="isProjectPayment(propose.payment_kbn)">
+														<pre style="font-size: 14px; text-align: center; margin-bottom: 0;">{{propose.payment_kbn_name}}：￥{{getNumComma(propose.price)}} 提案納期：{{propose.noki}}</pre>
+													</div>
+													<div ng-show="!isProjectPayment(propose.payment_kbn)">
+														<pre style="font-size: 12px; text-align: center; margin-bottom: 0;">{{propose.payment_kbn_name}}：￥{{getNumComma(propose.hour_price)}}(1H辺り)<br />週に {{propose.week_hour_kbn_name}} 相当の仕事を {{propose.week_hour_period_kbn_name}} の期間実施予定</pre>
+													</div>
+													<pre style="font-size: 12px; text-align: left; margin-bottom: 0; margin-top: 10px; background: white;">{{propose.content}}</pre>
+													<div style="float: right; font-size: 12px;">
+														メッセージのやり取りは<a ng-href="message/target/{{propose.msg_id}}" target="_blank">こちら</a>から
+													</div>
+													<div style="clear: both;"></div>
+				
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>	
+					</div>					
+	
+					<div ng-show="!isOwner()">
+						<button id="btnEntry" type="button" class="btn btn-primary" data-toggle="collapse" data-target="#entry-box">
+							<i class="glyphicon glyphicon-arrow-down"></i>&nbsp;提案する
+						</button>
+					</div>
+	
+					<div id="entry-box" class="collapse" style="margin-top: 25px;">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+						style="padding-left: 0; display: none;"
+						ng-style="{display: displayProposeMessages == '' ? 'none' : ''}">
+							<div class="alert" ng-class="{'alert-info alert-info-ex-blue': !isError(errors), 'alert-danger': isError(errors)}" role="alert"
+							style="margin: 20px 5px 0px 20px;">
+								<p class="text-center" ng-bind-html="displayProposeMessages | lineBreak"></p>
+							</div>
+						</div>
+	
+						<div class="panel panel-default">
+							<div class="panel-body" style="padding: 10px;">
+	
+								<div class="row" style="padding: 10px 10px 0px 10px;">
+	
+									<div id="message-area" class="col-lg-12">
+										<div id="message" class="alert alert-info alert-info-ex-yellow" role="alert"
+										style="margin-bottom: 10px;"
+										ng-style="{display: displayProposeMessages == '' ? '' : 'none'}">
+											<button id="btnMessageClose" type="button" class="close" data-dismiss="alert">
+												<span aria-hidden="true" style="font-size: 17px;">×</span><span class="sr-only">Close</span>
+											</button>
+											<p id="message-text" class="text-center">
+												アップスワークは直接取引を禁止しておりません。
+												<br />
+												また当サイトサービスは現在すべて無料です。
+											</p>
+										</div>
+									</div>
+	
+								</div>
+	
+								<div class="row" style="margin-left: 10px;">
+									<div class="form-group">
+										<div style="float: left; width: 165px; margin-top: 6px; margin-right: 15px; max-height: 30px; margin-bottom: -7px;">
+											<p style="float: left;">
+												支払方式
+											</p>
+											<div style="float: right;">
+												<span class="label label-danger">必須</span>
+												<span class="glyphicon glyphicon-question-sign" style="margin-left: 5px;" rel="tooltip" data-original-title="支払方式を選択してください。"></span>
+											</div>
+											<div style="clear: both;"></div>
+										</div>
+										<div style="float: left; margin-top: 7px; width: 350px; display: inline">
+											<input type="radio" name="radioPaymentDt" value="121" ng-model="workProposeModel.payment_kbn" ng-change="changePaymentKbn()" ng-disabled="isPreview() || isLimitDays()">
+											時給制
+											<input type="radio" name="radioPaymentDt" value="122" ng-model="workProposeModel.payment_kbn" ng-change="changePaymentKbn()" ng-disabled="isPreview() || isLimitDays()" style="margin-left: 10px;">
+											固定報酬
+										</div>
+									</div>
+								</div>
+	
+								<div ng-show="isProjectPaymentForPropose()">
+	
+									<div class="row" style="margin-top: 10px; margin-left: 10px;">
+										<div class="form-group">
+											<div style="float: left; width: 165px; margin-top: 6px; margin-right: 15px; max-height: 30px;">
+												<p style="float: left;">
+													提案金額
+												</p>
+												<div style="float: right;">
+													<span class="label label-danger">必須</span>
+													<span class="glyphicon glyphicon-question-sign" rel="tooltip" data-original-title="提案金額を数値で入力してください。" style="margin-left: 5px;"></span>
+												</div>
+												<div style="clear: both;"></div>
+											</div>
+											<div class="col-lg-8 form-inline">
+												<input type="text" class="form-control" ng-model="workProposeModel.price" placeholder="" style="width: 130px; text-align: right; display: inline;" value="0" ng-disabled="isPreview() || isLimitDays()">
+												<span style="margin-left: 5px;">円</span>
+												<p>
+													(募集条件：{{workModel.price_kbn_nm}})
+												</p>
+											</div>
+										</div>
+									</div>
+	
+									<div class="row" style="margin-top: 10px; margin-left: 10px;">
+										<div class="form-group">
+											<div style="float: left; width: 165px; margin-top: 6px; margin-right: 15px; max-height: 30px;">
+												<p style="float: left;">
+													完了予定日
+												</p>
+												<div style="float: right;">
+													<span class="label label-danger">必須</span>
+													<span class="glyphicon glyphicon-question-sign" style="margin-left: 5px;" rel="tooltip" data-original-title="完了予定日をYYYY-MM-DD形式で入力(カレンダー選択)してください。"></span>
+												</div>
+												<div style="clear: both;"></div>
+											</div>
+											<div class="col-lg-8 form-inline">
+												<div class='input-group date' style="width: 166px;">
+													<input type='text' class="form-control" ng-model="workProposeModel.noki" id="workProposeModel_noki" 
+													style="width: 130px;" ng-disabled="isPreview() || isLimitDays()" />
+													<span class="input-group-btn">
+														<button class="btn btn-default" type="button"
+														ng-disabled="isPreview() || isLimitDays()">
+															<span class="glyphicon glyphicon-calendar"></span>
+														</button> </span>
+												</div>
+												<p>
+													(希望納期：{{workModel.noki}})
+												</p>
+											</div>
+										</div>
+									</div>
+								</div>
+	
+								<div ng-show="!isProjectPaymentForPropose()">
+	
+									<div class="row" style="margin-top: 10px; margin-left: 10px;">
+										<div class="form-group">
+											<div style="float: left; width: 165px; margin-top: 6px; margin-right: 15px; max-height: 30px;">
+												<p style="float: left;">
+													時給
+												</p>
+												<div style="float: right;">
+													<span class="label label-danger">必須</span>
+													<span class="glyphicon glyphicon-question-sign" style="margin-left: 5px;" rel="tooltip" data-original-title="時給を数値で入力してください。"></span>
+												</div>
+												<div style="clear: both;"></div>
+											</div>
+											<div class="col-lg-8 form-inline">
+												<input type="text" class="form-control" ng-model="workProposeModel.hour_price" placeholder="" style="width: 100px; text-align: right; display: inline;" value="0" ng-disabled="isPreview() || isLimitDays()">
+												<span style="margin-left: 5px;">円</span>
+												<p>
+													(募集条件：{{workModel.hour_price_kbn_nm}})
+												</p>
+											</div>
+	
+										</div>
+									</div>
+	
+									<div class="row" style="margin-top: 10px; margin-left: 10px;">
+										<div class="form-group">
+											<div style="float: left; width: 165px; margin-top: 6px; margin-right: 15px; max-height: 30px;">
+												<p style="float: left;">
+													仕事量と予定期間
+												</p>
+												<div style="float: right;">
+													<span class="label label-danger">必須</span>
+													<span class="glyphicon glyphicon-question-sign" style="margin-left: 5px;" rel="tooltip" data-original-title="仕事量と予定期間を選択してください。"></span>
+												</div>
+												<div style="clear: both;"></div>
+											</div>
+											<div class="col-lg-8 form-inline" style="float: left;">
+												<label>週に</label>
+												<div class="btn-group" style="margin-right: 5px;">
+													<a class="btn btn-default" style="width: 100px; text-align: left;" ng-disabled="isPreview() || isLimitDays()"> <span class="dropdown" style="font-size: 13px;">{{workProposeModel.week_hour_kbn_nm}}</span> </a>
+													<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size: 13px !important;" ng-disabled="isPreview() || isLimitDays()"> <span class="caret"></span> </a>
+													<ul class="dropdown-menu">
+														<li>
+															<a value="151" ng-click="selectDropDownItem($event, workProposeModel, 'week_hour_kbn', 'week_hour_kbn_nm')">10時間未満</a>
+														</li>
+														<li class="divider"></li>
+														<li>
+															<a value="152" ng-click="selectDropDownItem($event, workProposeModel, 'week_hour_kbn', 'week_hour_kbn_nm')">10 - 30時間</a>
+														</li>
+														<li class="divider"></li>
+														<li>
+															<a value="153" ng-click="selectDropDownItem($event, workProposeModel, 'week_hour_kbn', 'week_hour_kbn_nm')">30時間以上</a>
+														</li>
+													</ul>
+												</div>
+												<label>相当の仕事を</label>
+												<div style="margin-top: 10px;">
+													<div class="btn-group" style="margin-right: 5px;">
+														<a class="btn btn-default" style="width: 90px; text-align: left;" ng-disabled="isPreview() || isLimitDays()"> <span class="dropdown" style="font-size: 13px;">{{workProposeModel.week_hour_period_kbn_nm}}</span> </a>
+														<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size: 13px !important;" ng-disabled="isPreview() || isLimitDays()"> <span class="caret"></span> </a>
+														<ul class="dropdown-menu">
+															<li>
+																<a value="171" ng-click="selectDropDownItem($event, workProposeModel, 'week_hour_period_kbn', 'week_hour_period_kbn_nm')">1週間未満</a>
+															</li>
+															<li class="divider"></li>
+															<li>
+																<a value="172" ng-click="selectDropDownItem($event, workProposeModel, 'week_hour_period_kbn', 'week_hour_period_kbn_nm')">1ヶ月未満</a>
+															</li>
+															<li class="divider"></li>
+															<li>
+																<a value="173" ng-click="selectDropDownItem($event, workProposeModel, 'week_hour_period_kbn', 'week_hour_period_kbn_nm')">1 - 3ヶ月</a>
+															</li>
+															<li class="divider"></li>
+															<li>
+																<a value="174" ng-click="selectDropDownItem($event, workProposeModel, 'week_hour_period_kbn', 'week_hour_period_kbn_nm')">3 - 6ヶ月</a>
+															</li>
+															<li class="divider"></li>
+															<li>
+																<a value="175" ng-click="selectDropDownItem($event, workProposeModel, 'week_hour_period_kbn', 'week_hour_period_kbn_nm')">6ヶ月以上</a>
+															</li>
+														</ul>
+													</div>
+													<label>の期間を実施予定</label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row" style="margin-top: 10px; margin-left: 10px; margin-right: 0px;">
+									<div class="form-group">
+										<div style="float: left; width: 165px; margin-top: 6px; margin-right: 15px; max-height: 30px;">
+											<p style="float: left;">
+												メッセージ
+											</p>
+											<div style="float: right;">
+												<span class="label label-danger">必須</span>
+												<span class="glyphicon glyphicon-question-sign" style="margin-left: 5px;" rel="tooltip" data-original-title="メッセージを入力してください。"></span>
+											</div>
+											<div style="clear: both;"></div>
+										</div>
+										<div class="col-lg-12 form-inline" style="padding-left: 0;">
+											<textarea rows="15" style="width: 100%;" ng-model="workProposeModel.content" ng-disabled="isPreview() || isLimitDays()"></textarea>
+											<p style="float: right"  ng-bind-html="getLimitStringMsg(workProposeModel.content, 3000) | doTrustAsHtml">
+											</p>
+											<div style="clear: both;"></div>
+										</div>
+									</div>
+								</div>
+	
+								<div class="row" style="margin-top: 10px; margin-left: 10px; margin-right: 0px;">
+									<div class="form-group">
+										<div class="col-lg-12" style="padding-left: 0;">
+											<button type="button" class="btn btn-default" ng-disabled="isPreview() || isLimitDays() || !isLogin()" style="float: right;" ng-click="updateWorkPropose(workProposeModel)">
+												<i class="glyphicon glyphicon-save"></i>&nbsp;送　信
+											</button>
+											<div style="clear: both;"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- work entry end -->
+	
+			</div>
+		</div>
+	</div>

@@ -1,0 +1,57 @@
+<%= form_for(@item_propose) do |f| %>
+  <% if @item_propose.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@item_propose.errors.count, "error") %> prohibited this item_propose from being saved:</h2>
+
+      <ul>
+      <% @item_propose.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :item_id %><br>
+    <%= f.number_field :item_id %>
+  </div>
+  <div class="field">
+    <%= f.label :payment_kbn %><br>
+    <%= f.number_field :payment_kbn %>
+  </div>
+  <div class="field">
+    <%= f.label :price %><br>
+    <%= f.number_field :price %>
+  </div>
+  <div class="field">
+    <%= f.label :noki %><br>
+    <%= f.date_select :noki %>
+  </div>
+  <div class="field">
+    <%= f.label :hour_price_kbn %><br>
+    <%= f.number_field :hour_price_kbn %>
+  </div>
+  <div class="field">
+    <%= f.label :week_hour_kbn %><br>
+    <%= f.number_field :week_hour_kbn %>
+  </div>
+  <div class="field">
+    <%= f.label :week_hour_period_kbn %><br>
+    <%= f.number_field :week_hour_period_kbn %>
+  </div>
+  <div class="field">
+    <%= f.label :content %><br>
+    <%= f.text_field :content %>
+  </div>
+  <div class="field">
+    <%= f.label :create_user_id %><br>
+    <%= f.number_field :create_user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :update_user_id %><br>
+    <%= f.number_field :update_user_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

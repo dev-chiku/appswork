@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Item:</strong>
+  <%= @item_comment.item_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @item_comment.user_id %>
+</p>
+
+<p>
+  <strong>Nicname:</strong>
+  <%= @item_comment.nicname %>
+</p>
+
+<p>
+  <strong>Comment:</strong>
+  <%= @item_comment.comment %>
+</p>
+
+<p>
+  <strong>Password:</strong>
+  <%= @item_comment.password %>
+</p>
+
+<p>
+  <strong>Create user:</strong>
+  <%= @item_comment.create_user_id %>
+</p>
+
+<p>
+  <strong>Update user:</strong>
+  <%= @item_comment.update_user_id %>
+</p>
+
+<%= link_to 'Edit', edit_item_comment_path(@item_comment) %> |
+<%= link_to 'Back', item_comments_path %>

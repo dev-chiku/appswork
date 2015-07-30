@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Item:</strong>
+  <%= @item_good.item_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @item_good.user_id %>
+</p>
+
+<p>
+  <strong>Create user:</strong>
+  <%= @item_good.create_user_id %>
+</p>
+
+<p>
+  <strong>Update user:</strong>
+  <%= @item_good.update_user_id %>
+</p>
+
+<%= link_to 'Edit', edit_item_good_path(@item_good) %> |
+<%= link_to 'Back', item_goods_path %>

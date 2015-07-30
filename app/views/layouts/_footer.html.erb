@@ -1,0 +1,1076 @@
+<!-- ログインモーダル -->
+<form novalidate ng-controller="UserLoginCtrl" id="formLogin" name="formLogin" ng-submit="login(userModel)" autocomplete="on">
+	<div class="modal" id="modal-login" tabindex="-1" style="overflow-y: auto !important;">
+		<div class="modal-dialog">
+			<div class="modal-content" style="max-width: 600px;">
+				<div class="modal-header" style=" border-bottom: 1px solid #e5e5e5; padding: 10px 15px;">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true" style="font-size: 21px;">&times;</span>
+					</button>
+					<h4 class="modal-title" id="modal-label" style="font-size: 17px;">ログイン</h4>
+				</div>
+				<div class="modal-body" style="padding: 20px;">
+					<div id="message-area" class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 0; display: none;" ng-style="{display: displayMessages == '' ? 'none' : ''}">
+						<div class="alert" ng-class="{'alert-info alert-info-ex-blue': !isError(errors), 'alert-danger': isError(errors)}" role="alert">
+							<button type="button" class="close" data-dismiss="alert" style="font-size: 0;">
+								<span aria-hidden="true" style="font-size: 17px;">×</span><span class="sr-only">Close</span>
+							</button>
+							<p class="text-center" ng-bind-html="displayMessages | lineBreak">
+							</p>
+						</div>
+					</div>
+
+					<div class="col-lg-10">
+						<div class="row">
+							<div class="form-group" ng-class="{'has-error': isAttrError(errors.email)}">
+								<div style="float: left; width: 110px; max-height: 30px;">
+									<p style="margin-top: 6px;">
+										メールアドレス
+									</p>
+								</div>
+								<div class="col-lg-9" style="padding-left: 0; padding-right: 30px;">
+									<input id="inputLoginEmail" type="text" class="form-control" ng-model="userModel.email" placeholder="メールアドレス" autocomplete="on">
+								</div>
+							</div>
+						</div>
+						<div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+							<div class="form-group" ng-class="{'has-error': isAttrError(errors.password)}">
+								<div style="float: left; width: 110px; max-height: 30px;">
+									<p style="margin-top: 6px;">
+										パスワード
+									</p>
+								</div>
+								<div class="col-lg-9" style="padding-left: 0; padding-right: 30px;">
+									<input type="password" class="form-control" ng-model="userModel.password" placeholder="パスワード">
+								</div>
+							</div>
+						</div>
+						<div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+							<div class="form-group" ng-class="{'has-error': isAttrError(errors.password)}">
+								<div class="col-lg-9" style="margin-left: 96px;">
+									<input style="float: left;" type="checkbox" ng-model="userModel.save_login_flg" ng-true-value="1" ng-false-value="0">&nbsp;ログイン状態を1ヶ月保持する
+								</div>
+							</div>
+						</div>
+						
+						<div style="clear: both;"></div>
+					</div>
+
+					<div class="col-lg-2">
+						<div style="float: right;">
+							<img style="float:right;" src="/assets/ssl-img.gif">
+							<br>
+							<p style="float:right; font-size: 10px;">
+								通信内容はSSL暗号化されます
+							</p>
+						</div>
+					</div>
+					<div style="clear: both;"></div>
+
+				</div>
+				<div class="modal-footer" style=" border-top: 1px solid #e5e5e5;">
+					<button type="submit" class="btn btn-default">
+						<i class="glyphicon glyphicon-log-in"></i>&nbsp;ログイン
+					</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						<i class="glyphicon glyphicon-remove-circle"></i>&nbsp;キャンセル
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
+<!-- はじめての方モーダル -->
+<form novalidate ng-controller="UserRegistCtrl" name="formUserRegist" ng-submit="inserUser(userModel)" autocomplete="on">
+	<div class="modal" id="modal-first" tabindex="-1" style="overflow-y: auto !important;">
+		<div class="modal-dialog">
+			<div class="modal-content" style="width: 700px;">
+				<div class="modal-header" style="border-bottom: 1px solid #e5e5e5; padding: 10px 15px;">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true" style="font-size: 21px;">&times;</span>
+					</button>
+					<h4 class="modal-title" id="modal-label" style="font-size: 17px;">メールアドレスで登録する</h4>
+				</div>
+				<div class="modal-body" style="padding: 20px;">
+					<div id="message-area" class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 0; display: none;" ng-style="{display: displayMessages == '' ? 'none' : ''}">
+						<div class="alert" ng-class="{'alert-info alert-info-ex-blue': !isError(errors), 'alert-danger': isError(errors)}" role="alert">
+							<button type="button" class="close" data-dismiss="alert" style="font-size: 0;">
+								<span aria-hidden="true" style="font-size: 17px;">×</span><span class="sr-only">Close</span>
+							</button>
+							<p class="text-center" ng-bind-html="displayMessages | lineBreak">
+							</p>
+						</div>
+					</div>
+
+					<div class="col-lg-10">
+						<div class="row">
+							<div class="form-group" ng-class="{'has-error': isAttrError(errors.email)}">
+								<div style="float: left; width: 160px; margin-top: 6px; margin-right: 10px; max-height: 30px;">
+									<p style="float: left;">
+										メールアドレス
+									</p>
+									<div style="float: right;">
+										<span class="label label-warning">非公開</span>
+				                        <a rel="tooltip" data-placement="top" data-original-title="メールアドレスを入力してください" style="color: #666666;">
+											<span class="glyphicon glyphicon-question-sign"></span>
+				                        </a>
+									</div>
+									<div style="clear: both;"></div>
+								</div>
+								<div class="col-lg-8">
+									<input id="inputRegistEmail" type="text" class="form-control" ng-model="userModel.email" placeholder="メールアドレス" autocomplete="on">
+								</div>
+							</div>
+						</div>
+						<div class="row" style="margin-top: 10px;">
+							<div class="form-group" ng-class="{'has-error': isAttrError(errors.password)}">
+								<div style="float: left; width: 160px; margin-top: 6px; margin-right: 10px; max-height: 30px;">
+									<p style="float: left;">
+										パスワード
+									</p>
+									<div style="float: right;">
+										<span class="label label-warning">非公開</span>
+				                        <a rel="tooltip" data-placement="top" data-original-title="半角英数記号で６文字以上、１５文字以内で入力してください" style="color: #666666;">
+											<span class="glyphicon glyphicon-question-sign"></span>
+				                        </a>
+									</div>
+									<div style="clear: both;"></div>
+								</div>
+								<div class="col-lg-8">
+									<input type="password" class="form-control" ng-model="userModel.password" placeholder="パスワード">
+								</div>
+							</div>
+						</div>
+						<div class="row" style="margin-top: 10px;">
+							<div class="form-group" ng-class="{'has-error': isAttrError(errors.display_name)}">
+								<div style="float: left; width: 160px; margin-top: 6px; margin-right: 10px; max-height: 30px;">
+									<p style="float: left;">
+										表示名
+									</p>
+									<div style="float: right;">
+										<span class="label label-primary" style="padding: 2px 11px;">公開</span>
+				                        <a rel="tooltip" data-placement="top" data-original-title="４文字以上、１０文字以内で入力してください" style="color: #666666;">
+											<span class="glyphicon glyphicon-question-sign"></span>
+				                        </a>
+									</div>
+									<div style="clear: both;"></div>
+								</div>
+								<div class="col-lg-8">
+									<input type="text" class="form-control" ng-model="userModel.display_name" placeholder=" 例) user-0001">
+								</div>
+							</div>
+						</div>
+						<div class="row" style="margin-top: 10px;">
+							<div class="form-group" ng-class="{'has-error': isAttrError(errors.confirm_flg)}">
+								<div style="float: left; width: 170px; margin-top: 6px;"></div>
+								<div class="col-lg-8 form-inline">
+									<div class="checkbox">
+										<label>
+											<div style="float: left;">
+												<input style="float: left;" type="checkbox" ng-model="userModel.confirm_flg" >
+											</div>
+											<div style="float: left;">
+												<a href="agreement" target="_blank">利用規約</a>と<a href="privacypolicy" target="_blank">プライバシーポリシー</a>を確認の上、同意する
+											</div> </label>
+									</div>
+									<div style="clear: both;"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-2">
+						<div style="float: right;">
+							<img style="float:right;" src="/assets/ssl-img.gif">
+							<br>
+							<p style="float:right; font-size: 10px;">
+								通信内容はSSL暗号化されます
+							</p>
+						</div>
+					</div>
+				</div>
+				<div style="clear: both;"></div>
+				<div class="modal-footer" style=" border-top: 1px solid #e5e5e5;">
+					<button type="submit" class="btn btn-default">
+						<i class="glyphicon glyphicon-user"></i>&nbsp;登録 (無料)
+					</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						<i class="glyphicon glyphicon-remove-circle"></i>&nbsp;キャンセル
+					</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</form>
+
+<!-- 仕事依頼モーダル -->
+<form id="workRecruit" novalidate ng-controller="WorkRecruitCtrl" name="form" ng-submit="updateWork(workModel, false)" autocomplete="on">
+
+	<div class="modal" id="modal-recruit" tabindex="-1" style="overflow-y: auto !important;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" style=" border-bottom: 1px solid #e5e5e5; padding: 10px 15px;">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true" style="font-size: 21px;">&times;</span>
+					</button>
+					<h4 class="modal-title" id="modal-label" style="font-size: 17px;">仕事を依頼する</h4>
+				</div>
+	
+				<!-- modal-body start -->
+				<div class="modal-body" style="padding: 20px 20px 20px 35px;">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 0; display: none;" ng-style="{display: displayMessages == '' ? 'none' : ''}">
+						<div class="alert alert-danger"  role="alert">
+							<p class="text-center" ng-bind-html="displayMessages | lineBreak">
+							</p>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group">
+							<div style="float: left; width: 170px; margin-top: 6px; margin-right: 20px; max-height: 30px;">
+								<p style="float: left;">
+									仕事カテゴリ
+								</p>
+								<div style="float: right;">
+									<span class="label label-danger">必須</span>
+									<span class="glyphicon glyphicon-question-sign" style="margin-left: 5px;" rel="tooltip" data-original-title="それぞれの分野から依頼したいお仕事のカテゴリを選択してください。"></span>
+								</div>
+								<div style="clear: both;"></div>
+							</div>
+							<div class="col-lg-7">
+								<div style="clear: both;"></div>
+	
+								<!-- システム開発・運用 start -->
+								<div class="panel panel-default" style="margin-bottom: 10px;">
+									<div class="panel-heading">
+										<h4 class="panel-title" style="font-size: 13px;"><a data-toggle="collapse" data-parent="#accordion" href="javascript:;" data-target="#system"> システム開発・運用 </a></h4>
+									</div>
+									<div id="system" class="panel-collapse collapse">
+										<div class="panel-body" style="font-size: 12px; padding: 10px 15px;">
+											<div>
+												<input type="radio" name="radioRecruitSystem" value="1" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;Web・システム開発
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="2" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;スマホアプリ・モバイル開発
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="3" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;アプリケーション開発
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="4" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;運用・管理・保守
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- システム開発・運用 end -->
+	
+								<!-- Web制作・Webデザイン start -->
+								<div class="panel panel-default" style="margin-bottom: 10px;">
+									<div class="panel-heading">
+										<h4 class="panel-title" style="font-size: 13px;"><a data-toggle="collapse" data-parent="#accordion" href="#web-design"> Web制作・Webデザイン </a></h4>
+									</div>
+									<div id="web-design" class="panel-collapse collapse">
+										<div class="panel-body" style="font-size: 12px; padding: 10px 15px;">
+											<div>
+												<input type="radio" name="radioRecruitSystem" value="11" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;ウェブサイト制作・デザイン
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="12" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;スマートフォン・モバイルサイト制作
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="13" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;バナー・アイコン・ボタン
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="14" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;ECサイト・ネットショップ構築・運用
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="15" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;Webマーケティング・HP集客
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="16" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;運営・更新・保守・SNS運用
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- Web制作・Webデザイン end -->
+	
+								<!-- デザイン制作 start -->
+								<div class="panel panel-default" style="margin-bottom: 10px;">
+									<div class="panel-heading">
+										<h4 class="panel-title" style="font-size: 13px;"><a data-toggle="collapse" data-parent="#accordion" href="#design"> デザイン制作 </a></h4>
+									</div>
+									<div id="design" class="panel-collapse collapse">
+										<div class="panel-body" style="font-size: 12px; padding: 10px 15px;">
+											<div>
+												<input type="radio" name="radioRecruitSystem" value="21" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;ロゴ・イラスト・キャラクター
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="22" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;印刷物・DTP・その他
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="23" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;POP・シール・メニュー
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="24" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;看板・地図・インフォグラフィック
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="25" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;プロダクト・3D
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- デザイン制作 end -->
+	
+								<!-- ライティング・ネーミング start -->
+								<div class="panel panel-default" style="margin-bottom: 10px;">
+									<div class="panel-heading">
+										<h4 class="panel-title" style="font-size: 13px;"><a data-toggle="collapse" data-parent="#accordion" href="#writing"> ライティング・ネーミング </a></h4>
+									</div>
+									<div id="writing" class="panel-collapse collapse">
+										<div class="panel-body" style="font-size: 12px; padding: 10px 15px;">
+											<div>
+												<input type="radio" name="radioRecruitSystem" value="31" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;ライティング
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="32" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;ネーミング・コピー
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="33" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;編集・校正
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- ライティング・ネーミング end -->
+	
+								<!-- タスク・作業 start -->
+								<div class="panel panel-default" style="margin-bottom: 10px;">
+									<div class="panel-heading">
+										<h4 class="panel-title" style="font-size: 13px;"><a data-toggle="collapse" data-parent="#accordion" href="#task"> タスク・作業 </a></h4>
+									</div>
+									<div id="task" class="panel-collapse collapse">
+										<div class="panel-body" style="font-size: 12px; padding: 10px 15px;">
+											<div>
+												<input type="radio" name="radioRecruitSystem" value="41" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;データ作成・テキスト入力
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="42" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;レビュー・投稿・アンケート
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="43" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;調査・分析・その他
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="44" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;内職・軽作業・代行
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- タスク・作業 end -->
+	
+								<!-- マルチメディア start -->
+								<div class="panel panel-default" style="margin-bottom: 10px;">
+									<div class="panel-heading">
+										<h4 class="panel-title" style="font-size: 13px;"><a data-toggle="collapse" data-parent="#accordion" href="#multimedia"> マルチメディア </a></h4>
+									</div>
+									<div id="multimedia" class="panel-collapse collapse">
+										<div class="panel-body" style="font-size: 12px; padding: 10px 15px;">
+											<div>
+												<input type="radio" name="radioRecruitSystem" value="51" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;動画・写真・画像
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="52" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;漫画・アニメーション・ドラマ
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="53" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;音楽・音源・ナレーション
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- マルチメディア end -->
+	
+								<!-- 翻訳 start -->
+								<div class="panel panel-default" style="margin-bottom: 10px;">
+									<div class="panel-heading">
+										<h4 class="panel-title" style="font-size: 13px;"><a data-toggle="collapse" data-parent="#accordion" href="#translation"> 翻訳 </a></h4>
+									</div>
+									<div id="translation" class="panel-collapse collapse">
+										<div class="panel-body" style="font-size: 12px; padding: 10px 15px;">
+											<div>
+												<input type="radio" name="radioRecruitSystem" value="61" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;英語翻訳・英文翻訳
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="62" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;中国語翻訳
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="63" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;韓国語翻訳
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="64" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;フランス語翻訳
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="65" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;スペイン語翻訳
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="66" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;ドイツ語翻訳
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="67" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;その他翻訳
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="68" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;映像翻訳・出版翻訳・メディア翻訳
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- 翻訳・通訳サービス end -->
+	
+								<!-- 企画・リサーチ・その他 start -->
+								<div class="panel panel-default" style="margin-bottom: 10px;">
+									<div class="panel-heading">
+										<h4 class="panel-title" style="font-size: 13px;"><a data-toggle="collapse" data-parent="#accordion" href="#plan"> 企画・リサーチ・その他 </a></h4>
+									</div>
+									<div id="plan" class="panel-collapse collapse">
+										<div class="panel-body" style="font-size: 12px; padding: 10px 15px;">
+											<div>
+												<input type="radio" name="radioRecruitSystem" value="71" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;企画・PR
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="72" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;リサーチ・分析・解析
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="73" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;セールス・ビジネスサポート
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="74" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;資料作成サポート
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="75" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;コンサルティング
+											</div>
+											<div style="margin-top: 7px;">
+												<input type="radio" name="radioRecruitSystem" value="76" ng-model="workModel.work_kbn" ng-change="changeWorkKbn()">
+												&nbsp;その他
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- 企画・リサーチ・その他 start -->
+	
+								<span style="margin-left: 5px;">({{workModel.work_kbn_nm}})</span>
+							</div>
+						</div>
+					</div>
+	
+					<div class="row" style="margin-top: 10px;">
+						<div class="form-group">
+							<div style="float: left; width: 170px; margin-top: 6px; margin-right: 20px; max-height: 30px;">
+								<p style="float: left;">
+									依頼タイトル
+								</p>
+								<div style="float: right;">
+									<span class="label label-danger">必須</span>
+									<span class="glyphicon glyphicon-question-sign" style="margin-left: 5px;" rel="tooltip" data-original-title="ご依頼のタイトルを５０文字以内で入力してください。"></span>
+								</div>
+								<div style="clear: both;"></div>
+							</div>
+							<div class="col-lg-8">
+								<input type="text" class="form-control" placeholder="依頼タイトル" ng-model="workModel.title" >
+							</div>
+						</div>
+					</div>
+	
+					<div class="row" style="margin-top: 10px;">
+						<div class="form-group">
+							<div style="float: left; width: 170px; margin-top: 6px; margin-right: 20px; max-height: 30px; margin-bottom: -7px;">
+								<p style="float: left;">
+									支払方式
+								</p>
+								<div style="float: right;">
+									<span class="label label-danger">必須</span>
+									<span class="glyphicon glyphicon-question-sign" style="margin-left: 5px;" rel="tooltip" data-original-title="支払方式を選択してください。"></span>
+								</div>
+								<div style="clear: both;"></div>
+							</div>
+							<div style="float: left; margin-top: 7px; width: 350px; display: inline">
+								<input type="radio" name="radioPayment" value="121" ng-model="workModel.payment_kbn" ng-change="changePaymentKbn()">
+								時給制
+								<input type="radio" name="radioPayment" value="122" ng-model="workModel.payment_kbn" ng-change="changePaymentKbn()" style="margin-left: 10px;">
+								固定報酬
+							</div>
+						</div>
+					</div>
+	
+					<div ng-show="isProjectPayment()">
+						
+						<div class="row" style="margin-top: 10px;">
+							<div class="form-group">
+								<div style="float: left; width: 170px; margin-top: 6px; margin-right: 20px; max-height: 30px;">
+									<p style="float: left;">
+										目安予算
+									</p>
+									<div style="float: right;">
+										<span class="label label-danger">必須</span>
+										<span class="glyphicon glyphicon-question-sign" style="margin-left: 5px;" rel="tooltip" data-original-title="固定報酬の予算の目安を入力してください。"></span>
+									</div>
+									<div style="clear: both;"></div>
+								</div>
+								<div class="col-lg-8 form-inline">
+									<div class="btn-group" style="margin-right: 35px;">
+										<a class="btn btn-default" style="width: 190px; text-align: left;"> <span class="dropdown" style="font-size: 13px;">{{workModel.price_kbn_nm}}</span> </a>
+										<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size: 13px !important;"> <span class="caret"></span> </a>
+										<ul class="dropdown-menu" style="width: 214px;">
+											<li>
+												<a value="401" ng-click="selectDropDownItem($event, workModel, 'price_kbn', 'price_kbn_nm')">5千円 〜 5万円</a>
+											</li>
+											<li class="divider"></li>
+											<li>
+												<a value="402" ng-click="selectDropDownItem($event, workModel, 'price_kbn', 'price_kbn_nm')">5万円 〜 10万円</a>
+											</li>
+											<li class="divider"></li>
+											<li>
+												<a value="403" ng-click="selectDropDownItem($event, workModel, 'price_kbn', 'price_kbn_nm')">10万円 〜 30万円</a>
+											</li>
+											<li class="divider"></li>
+											<li>
+												<a value="404" ng-click="selectDropDownItem($event, workModel, 'price_kbn', 'price_kbn_nm')">30万円 〜 50万円</a>
+											</li>
+											<li class="divider"></li>
+											<li>
+												<a value="405" ng-click="selectDropDownItem($event, workModel, 'price_kbn', 'price_kbn_nm')">50万円 〜 100万円</a>
+											</li>
+											<li class="divider"></li>
+											<li>
+												<a value="406" ng-click="selectDropDownItem($event, workModel, 'price_kbn', 'price_kbn_nm')">100万円 〜 300万円</a>
+											</li>
+											<li class="divider"></li>
+											<li>
+												<a value="407" ng-click="selectDropDownItem($event, workModel, 'price_kbn', 'price_kbn_nm')">300万円 〜 500万円</a>
+											</li>
+											<li class="divider"></li>
+											<li>
+												<a value="408" ng-click="selectDropDownItem($event, workModel, 'price_kbn', 'price_kbn_nm')">500万円 〜 1,000万円</a>
+											</li>
+											<li class="divider"></li>
+											<li>
+												<a value="409" ng-click="selectDropDownItem($event, workModel, 'price_kbn', 'price_kbn_nm')">1,000万円以上</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+		
+						<div class="row" style="margin-top: 10px;">
+							<div class="form-group">
+								<div style="float: left; width: 170px; margin-top: 6px; margin-right: 20px; max-height: 30px;">
+									<p style="float: left;">
+										希望納期
+									</p>
+									<div style="float: right;">
+										<span class="label label-primary">任意</span>
+										<span class="glyphicon glyphicon-question-sign" style="margin-left: 5px;" rel="tooltip" data-original-title="ご希望の納期を入力してください。"></span>
+									</div>
+									<div style="clear: both;"></div>
+								</div>
+								<div class="col-lg-8 form-inline">
+									<div class='input-group date'>
+										<input type='text' class="form-control" ng-model="workModel.noki" id="workModel_noki_recruit_modal" style="width: 120px;" />
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="button" 
+												ng-blur="handleBlurDateInput('#workModel_noki_recruit_modal', workModel, 'noki')">
+												<span class="glyphicon glyphicon-calendar"></span>
+											</button> </span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div ng-show="!isProjectPayment()">
+						
+						<div class="row" style="margin-top: 10px;">
+							<div class="form-group">
+								<div style="float: left; width: 170px; margin-top: 6px; margin-right: 20px; max-height: 30px;">
+									<p style="float: left;">
+										時給
+									</p>
+									<div style="float: right;">
+										<span class="label label-danger">必須</span>
+										<span class="glyphicon glyphicon-question-sign" style="margin-left: 5px;" rel="tooltip" data-original-title="時給を選択してください。"></span>
+									</div>
+									<div style="clear: both;"></div>
+								</div>
+								<div class="col-lg-8 form-inline">
+									<div class="btn-group" style="margin-right: 35px;">
+										<a class="btn btn-default" style="width: 190px; text-align: left;"> <span class="dropdown" style="font-size: 13px;">{{workModel.hour_price_kbn_nm}}</span> </a>
+										<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size: 13px !important;"> <span class="caret"></span> </a>
+										<ul class="dropdown-menu" style="width: 214px;">
+											<li>
+												<a value="131" ng-click="selectDropDownItem($event, workModel, 'hour_price_kbn', 'hour_price_kbn_nm')">700円 - 1,000円 / 時間</a>
+											</li>
+											<li class="divider"></li>
+											<li>
+												<a value="132" ng-click="selectDropDownItem($event, workModel, 'hour_price_kbn', 'hour_price_kbn_nm')">1,000円 - 1,500円 / 時間</a>
+											</li>
+											<li class="divider"></li>
+											<li>
+												<a value="133" ng-click="selectDropDownItem($event, workModel, 'hour_price_kbn', 'hour_price_kbn_nm')">1,500円 - 2,000円 / 時間</a>
+											</li>
+											<li class="divider"></li>
+											<li>
+												<a value="134" ng-click="selectDropDownItem($event, workModel, 'hour_price_kbn', 'hour_price_kbn_nm')">2,000円 - 2,500円 / 時間</a>
+											</li>
+											<li class="divider"></li>
+											<li>
+												<a value="135" ng-click="selectDropDownItem($event, workModel, 'hour_price_kbn', 'hour_price_kbn_nm')">2,500円 - 3,000円 / 時間</a>
+											</li>
+											<li class="divider"></li>
+											<li>
+												<a value="136" ng-click="selectDropDownItem($event, workModel, 'hour_price_kbn', 'hour_price_kbn_nm')">3,000円 - 4,000円 / 時間</a>
+											</li>
+											<li class="divider"></li>
+											<li>
+												<a value="137" ng-click="selectDropDownItem($event, workModel, 'hour_price_kbn', 'hour_price_kbn_nm')">4,000円 - 5,000円 / 時間</a>
+											</li>
+											<li class="divider"></li>
+											<li>
+												<a value="138" ng-click="selectDropDownItem($event, workModel, 'hour_price_kbn', 'hour_price_kbn_nm')">5,000円 以上 / 時間</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+		
+						<div class="row" style="margin-top: 10px;">
+							<div class="form-group">
+								<div style="float: left; width: 170px; margin-top: 6px; margin-right: 20px; max-height: 30px;">
+									<p style="float: left;">
+										仕事量と予定期間
+									</p>
+									<div style="float: right;">
+										<span class="label label-danger">必須</span>
+										<span class="glyphicon glyphicon-question-sign" style="margin-left: 5px;" rel="tooltip" data-original-title="仕事量と予定期間を選択してください。"></span>
+									</div>
+									<div style="clear: both;"></div>
+								</div>
+								<div class="col-lg-8 form-inline" style="float: left;">
+									<label>週に</label>
+									<div class="btn-group" style="margin-right: 5px;">
+										<a class="btn btn-default" style="width: 100px; text-align: left; "> <span class="dropdown" style="font-size: 13px;">{{workModel.week_hour_kbn_nm}}</span> </a>
+										<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size: 13px !important;"> <span class="caret"></span> </a>
+										<ul class="dropdown-menu">
+											<li>
+												<a value="151" ng-click="selectDropDownItem($event, workModel, 'week_hour_kbn', 'week_hour_kbn_nm')">10時間未満</a>
+											</li>
+											<li class="divider"></li>
+											<li>
+												<a value="152" ng-click="selectDropDownItem($event, workModel, 'week_hour_kbn', 'week_hour_kbn_nm')">10 - 30時間</a>
+											</li>
+											<li class="divider"></li>
+											<li>
+												<a value="153" ng-click="selectDropDownItem($event, workModel, 'week_hour_kbn', 'week_hour_kbn_nm')">30時間以上</a>
+											</li>
+										</ul>
+									</div>
+									<label>相当の仕事を</label>
+									<div style="margin-top: 10px;">
+										<div class="btn-group" style="margin-right: 5px;">
+											<a class="btn btn-default" style="width: 90px; text-align: left;"> <span class="dropdown" style="font-size: 13px;">{{workModel.week_hour_period_kbn_nm}}</span> </a>
+											<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size: 13px !important;"> <span class="caret"></span> </a>
+											<ul class="dropdown-menu">
+												<li>
+													<a value="171" ng-click="selectDropDownItem($event, workModel, 'week_hour_period_kbn', 'week_hour_period_kbn_nm')">1週間未満</a>
+												</li>
+												<li class="divider"></li>
+												<li>
+													<a value="172" ng-click="selectDropDownItem($event, workModel, 'week_hour_period_kbn', 'week_hour_period_kbn_nm')">1ヶ月未満</a>
+												</li>
+												<li class="divider"></li>
+												<li>
+													<a value="173" ng-click="selectDropDownItem($event, workModel, 'week_hour_period_kbn', 'week_hour_period_kbn_nm')">1 - 3ヶ月</a>
+												</li>
+												<li class="divider"></li>
+												<li>
+													<a value="174" ng-click="selectDropDownItem($event, workModel, 'week_hour_period_kbn', 'week_hour_period_kbn_nm')">3 - 6ヶ月</a>
+												</li>
+												<li class="divider"></li>
+												<li>
+													<a value="175" ng-click="selectDropDownItem($event, workModel, 'week_hour_period_kbn', 'week_hour_period_kbn_nm')">6ヶ月以上</a>
+												</li>
+											</ul>
+										</div>
+										<label>の期間を依頼予定</label>								
+									</div>
+
+									
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row" style="margin-top: 10px;">
+						<div class="form-group">
+							<div style="float: left; width: 170px; margin-top: 6px; margin-right: 20px; max-height: 30px;">
+								<p style="float: left;">
+									募集の締め切り
+								</p>
+								<div style="float: right;">
+									<span class="label label-danger">必須</span>
+									<span class="glyphicon glyphicon-question-sign" style="margin-left: 5px;" rel="tooltip" data-original-title="募集の締め切りをYYYY-MM-DD形式で入力(選択)してください。"></span>
+								</div>
+								<div style="clear: both;"></div>
+							</div>
+							<div class="col-lg-8 form-inline">
+								<div class='input-group date'>
+									<input type='text' class="form-control" ng-model="workModel.limit_date" id="workModel_limit_date_recruit_modal" style="width: 120px;" />
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button" 
+											ng-blur="handleBlurDateInput('#workModel_limit_date_recruit_modal', workModel, 'limit_date')">
+											<span class="glyphicon glyphicon-calendar"></span>
+										</button> </span>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row" style="margin-top: 10px;">
+						<div class="form-group">
+							<div style="float: left; width: 170px; margin-top: 6px; margin-right: 20px; max-height: 30px;">
+								<p style="float: left;">
+									依頼の目的・背景
+								</p>
+								<div style="float: right;">
+									<span class="label label-danger">必須</span>
+									<span class="glyphicon glyphicon-question-sign" style="margin-left: 5px;" rel="tooltip" data-original-title="依頼の目的・背景を３０００文字以内で入力してください。当サイトは直接取引を禁止していませんので、自己責任の上で連絡先など明記して頂いても問題ありません。"></span>
+								</div>
+								<div style="clear: both;"></div>
+							</div>
+							<div class="col-lg-12 form-inline" style="padding-left: 0;">
+								<textarea rows="15" style="width: 100%;" ng-model="workModel.content"></textarea>
+								<p style="float: right">
+									(後3000文字入力可能です。)
+								</p>
+								<div style="clear: both;"></div>
+							</div>
+						</div>
+					</div>
+	
+				</div>
+				<!-- modal-body end -->
+	
+				<!-- modal-footer start -->
+				<div class="modal-footer" style=" border-top: 1px solid #e5e5e5;">
+					<button type="submit" class="btn btn-default">
+						<i class="glyphicon glyphicon-save"></i>&nbsp;送　信
+					</button>
+					<button type="button" class="btn btn-default" ng-click="updateWork(workModel, true)">
+						<i class="glyphicon glyphicon-eye-open"></i>&nbsp;プレビュー
+					</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						<i class="glyphicon glyphicon-remove-circle"></i>&nbsp;キャンセル
+					</button>
+				</div>
+				<!-- modal-footer end -->
+	
+			</div>
+		</div>
+	</div>
+
+</form>
+
+<!-- ログインモーダル -->
+<div class="modal" id="modal-notice" tabindex="-1" ng-controller="NoticeCtrl" style="overflow-y: auto !important;">
+	<div class="modal-dialog">
+		<div class="modal-content" style="max-width: 600px;">
+			<div class="modal-header" style=" border-bottom: 1px solid #e5e5e5; padding: 10px 15px;">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true" style="font-size: 21px;">&times;</span>
+				</button>
+				<h4 class="modal-title" id="modal-label" style="font-size: 17px;">お知らせ</h4>
+			</div>
+			<div class="modal-body" style="padding: 20px;">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<div style="float: left; font-size: 15px;">
+									お知らせ一覧
+								</div>
+								<div style="clear: both;"></div>
+							</div>
+		
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-lg-12" ng-repeat="notice in notices">
+										<div class="panel panel-default" style="margin-bottom: 10px;">
+											<div class="panel-heading">
+												<a data-toggle="collapse" data-parent="#accordion" href="javascript:;" ng-click="selectTitle(notice)" data-target="#notice{{$index}}" style="color: #212121;" id="target{{titleMsg.id}}"> 
+												<div style="float: left; font-size: 14px !important; margin-left: 10px; color: #2196f3;">
+													<span>{{notice.title}}</span>
+												</div>
+												<div class="top-badge red" ng-show="notice.notification_inf_count > 0" style="position: static; float: left; margin-top: 2px; margin-left: 10px;">
+													新着
+												</div>
+												<div style="float: right; font-size: 10px;">
+													{{notice.created_at_str}}
+												</div> <div style="clear: both;"></div> </a>
+											</div>
+											<div id="notice{{$index}}" class="panel-collapse collapse">
+												<div class="panel-body" style="font-size: 12px; padding: 10px;">
+													<div class="row">
+														<div class="col-lg-12">
+															<div style="margin-top: 0px;">
+																<pre style="font-size: 12px; margin : 0;" ng-bind="notice.content"></pre>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" style=" border-top: 1px solid #e5e5e5;">
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					<i class="glyphicon glyphicon-remove-circle"></i>&nbsp;閉じる
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 提案合意メッセージモーダル -->
+<form novalidate name="formProposeOkMessage" ng-controller="ProposeOkMessageCtrl" ng-submit="insertProposeOkMessage(proposeOkMessage)" autocomplete="on">
+	<div class="modal" id="modal-propose-ok-message" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content" style="  width: 621px;">
+				<div class="modal-header" style=" border-bottom: 1px solid #e5e5e5; padding: 10px 15px;">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true" style="font-size: 21px;">&times;</span>
+					</button>
+					<h4 class="modal-title" id="modal-label" style="font-size: 17px;">合意メッセージ送信</h4>
+				</div>
+				<div class="modal-body" style="padding: 20px;">
+					<div class="row">
+						<div class="col-lg-12">
+							
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 0; padding-right: 0; display: none;" ng-style="{display: displayMessages == '' ? 'none' : ''}">
+								<div class="alert" ng-class="{'alert-info alert-info-ex-blue': !isError(errors), 'alert-danger': isError(errors)}" role="alert">
+									<button type="button" class="close" data-dismiss="alert" style="font-size: 0;">
+										<span aria-hidden="true" style="font-size: 17px;">×</span><span class="sr-only">Close</span>
+									</button>
+									<p class="text-center" ng-bind-html="displayMessages | lineBreak">
+									</p>
+								</div>
+							</div>	
+
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 0; padding-right: 0;">
+								<div class="alert alert-info alert-info-ex-blue" role="alert">
+									<button type="button" class="close" data-dismiss="alert" style="font-size: 0;">
+										<span aria-hidden="true" style="font-size: 17px;">×</span><span class="sr-only">Close</span>
+									</button>
+									<p>
+										送信ボタンをクリックすると、提案の合意の実行、及び、合意メッセージが送信されます。<br /><br />
+										実行された提案の同意の取り消しはできません。<br />
+										同意を撤回したい場合などは直接メッセージを送信して、その旨をお伝えください。<br />
+										また提案の同意後は提案者と直接やり取りの上、お仕事を進めてください。
+									</p>
+								</div>
+							</div>					
+											
+							<div style="margin-top: 20px;">
+								<p style="margin: 10px 0 5px;">
+									メッセージ
+								</p>
+								<div class="form-group" ng-class="{'has-error': isAttrError(errors.content)}">
+									<textarea class="form-control" rows="5" style="background-color: white;" ng-model="proposeOkMessage.content" ></textarea>
+								</div>
+								<div style="float: right; margin-top: 10px;">
+									<button type="submit" class="btn btn-primary">
+										送 信
+									</button>
+								</div>
+								<div style="clear: both;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
+<!-- ファイルアップロード用 -->
+<form id="form-upload" action="{{'/users/upload?uploadKbn=1&uploadKbn=' + uploadKbn }}" ng-upload="uploadComplete(content)" upload-options-enable-rails-csrf style="display: none;">
+	<input type="file" name="avatar" id="avatar" onchange="angular.element(this).scope().chageUploadImage()"></input>
+	<button type="submit"
+	    class="upload-submit" id="upload-submit" >Upload Image</button>
+</form>
+
+<!-- アラートモーダル -->
+<div class="modal" id="modal-alert" tabindex="-1">
+	<div class="modal-dialog">
+
+		<div class="modal-content">
+			<div class="modal-header" style="border-bottom: 1px solid #e5e5e5;">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="modal-label">確 認</h4>
+			</div>
+			<div class="modal-body" id="alert-message"></div>
+			<div class="modal-footer" style=" border-top: 1px solid #e5e5e5;">
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					閉じる
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 確認モーダル -->
+<div class="modal" id="modal-confirm" tabindex="-1">
+	<div class="modal-dialog">
+
+		<div class="modal-content">
+			<div class="modal-header" style="border-bottom: 1px solid #e5e5e5;">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="modal-confirm-label">確 認</h4>
+			</div>
+			<div class="modal-body" id="modal-confirm-message"></div>
+			<div class="modal-footer" style=" border-top: 1px solid #e5e5e5;">
+				<button id="btnConfirmOk" type="button" class="btn btn-default">
+					OK
+				</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					Cancel
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 処理中ダイアログ -->
+<div class="modal" id="progressDialog" data-backdrop="static" style="padding-right: 15px !important; padding-left: 15px !important;">
+	<div class="modal-dialog" style="margin: 120px auto;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="confirmTitle">処理中</h4>
+			</div>
+			<div class="modal-body">
+				<div class="progress progress-striped active" style="height: 20px; border-radius: 3px;">
+				  <div class="progress-bar" style="width: 100%"></div>
+				</div>	
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="footer">
+	<hr class="footer_hr" />
+
+	<div class="container">
+		<!-- <div style="float: left;" class="footer_text">
+			<a href="https://docs.google.com/forms/d/16F3QzCNbR_dPtqy5ZqfsO6U-a67Quy8NbXh1OxGmAXA/viewform?usp=send_form" target="_blank">お問い合わせ</a>
+		</div> -->
+
+		<div style="float: right" class="footer_text">
+
+			<div style="float: left;" class="fb-like" data-href="{{getCurrentUrl()}}" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+			<div style="float: right; margin-left: 10px; margin-top: 3px;" >
+				<a href="https://twitter.com/share" class="twitter-share-button" data-url="{{getCurrentUrl()}}" data-counturl="{{getCurrentUrl()}}">Tweet</a>
+			</div>
+		</div>
+
+		<div style="clear: both;"></div>
+	</div>
+</div>
+
+<!--
+<div class="container">
+<div style="position: absolute; cursor: default; background-color: red;bottom: 0;right: 0;">
+text
+<br>
+2row
+</div>
+</div>
+-->
+
+<!-- ローディング -->
+<div id="loading" style="display:none">
+	<img src="/assets/loding.gif">
+</div>
+
+</div>
+
+</div>
+
+<script>
+	( function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id))
+				return;
+			js = d.createElement(s);
+			js.id = id;
+			js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.3";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk')); 
+</script>
+
+<script>
+	! function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+		if (!d.getElementById(id)) {
+			js = d.createElement(s);
+			js.id = id;
+			js.src = p + '://platform.twitter.com/widgets.js';
+			fjs.parentNode.insertBefore(js, fjs);
+		}
+	}(document, 'script', 'twitter-wjs');
+
+</script>

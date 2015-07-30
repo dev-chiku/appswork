@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Item Proposes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Payment kbn</th>
+      <th>Price</th>
+      <th>Noki</th>
+      <th>Hour price kbn</th>
+      <th>Week hour kbn</th>
+      <th>Week hour period kbn</th>
+      <th>Content</th>
+      <th>Create user</th>
+      <th>Update user</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @item_proposes.each do |item_propose| %>
+      <tr>
+        <td><%= item_propose.item_id %></td>
+        <td><%= item_propose.payment_kbn %></td>
+        <td><%= item_propose.price %></td>
+        <td><%= item_propose.noki %></td>
+        <td><%= item_propose.hour_price_kbn %></td>
+        <td><%= item_propose.week_hour_kbn %></td>
+        <td><%= item_propose.week_hour_period_kbn %></td>
+        <td><%= item_propose.content %></td>
+        <td><%= item_propose.create_user_id %></td>
+        <td><%= item_propose.update_user_id %></td>
+        <td><%= link_to 'Show', item_propose %></td>
+        <td><%= link_to 'Edit', edit_item_propose_path(item_propose) %></td>
+        <td><%= link_to 'Destroy', item_propose, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Item propose', new_item_propose_path %>

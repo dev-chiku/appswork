@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Names</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name kbn</th>
+      <th>Name</th>
+      <th>Name</th>
+      <th>Create user</th>
+      <th>Update user</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @names.each do |name| %>
+      <tr>
+        <td><%= name.name_kbn %></td>
+        <td><%= name.name_id %></td>
+        <td><%= name.name %></td>
+        <td><%= name.create_user_id %></td>
+        <td><%= name.update_user_id %></td>
+        <td><%= link_to 'Show', name %></td>
+        <td><%= link_to 'Edit', edit_name_path(name) %></td>
+        <td><%= link_to 'Destroy', name, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Name', new_name_path %>

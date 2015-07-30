@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Item Comments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>User</th>
+      <th>Nicname</th>
+      <th>Comment</th>
+      <th>Password</th>
+      <th>Create user</th>
+      <th>Update user</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @item_comments.each do |item_comment| %>
+      <tr>
+        <td><%= item_comment.item_id %></td>
+        <td><%= item_comment.user_id %></td>
+        <td><%= item_comment.nicname %></td>
+        <td><%= item_comment.comment %></td>
+        <td><%= item_comment.password %></td>
+        <td><%= item_comment.create_user_id %></td>
+        <td><%= item_comment.update_user_id %></td>
+        <td><%= link_to 'Show', item_comment %></td>
+        <td><%= link_to 'Edit', edit_item_comment_path(item_comment) %></td>
+        <td><%= link_to 'Destroy', item_comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Item comment', new_item_comment_path %>
