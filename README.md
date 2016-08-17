@@ -1,1 +1,1 @@
-# appswork
+rails, angularjs, bootstrapなどを使用したクラウドソーシングのサンプルWebアプリ
